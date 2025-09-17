@@ -5,7 +5,7 @@ packaging_format = 2
 id = "loops"
 name = "Loops"
 description.en = "Federated short video sharing platform"
-description.fr = "plateforme fédérée de partage de vidéos courtes"
+description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
 version = "1.0.0-alpha.2~ynh1"
 
@@ -18,13 +18,12 @@ admindoc = "https://github.com/joinloops/loops-server/blob/main/INSTALLATION.md"
 code = "https://github.com/joinloops/loops-server"
 
 [integration]
-yunohost = ">= 12.0.9"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = "amd64"
 multi_instance = false
 
 ldap = "false"
-
 sso = "false"
 
 disk = "50M"
