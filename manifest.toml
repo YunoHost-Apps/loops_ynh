@@ -53,6 +53,39 @@ ram.runtime = "350M"
     #help.fr = "Définissez le mot de passe de l'administrateur"
     #type = "password"
 
+    [install.s3_key_id]
+    ask.en = "S3 key ID:"
+    help.en = "Sets the key ID to connect to object storage"
+    type = "string"
+
+    [install.s3_key_secret]
+    ask.en = "S3 key secret:"
+    help.en = "Sets the key secret to connect to object storage"
+    type = "string"
+
+    [install.s3_region]
+    ask.en = "S3 region:"
+    help.en = "Skip this with other object storage providers"
+    type = "string"
+    default = "us-east-1"
+
+    [install.s3_bucket]
+    ask.en = "S3 bucket:"
+    help.en = "Sets the name of the bucket"
+    type = "string"
+
+    [install.s3_path_style]
+    ask.en = "Use path style endpoints for S3?"
+    help.en = "Usually required by third-party providers"
+    type = "select"
+    choices = ["true", "false"]
+
+    [install.s3_endpoint]
+    ask.en = "Custom S3 endpoint:"
+    help.en = "Required when using a third-party object storage provider (https://<domain>)"
+    type = "string"
+    optional = true
+
 [resources]
 
     [resources.sources]
