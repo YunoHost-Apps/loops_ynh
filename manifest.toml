@@ -59,8 +59,8 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/refs/tags/v1.0.0-alpha.2.tar.gz"
-    sha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    url = "https://codeload.github.com/joinloops/loops-server/tar.gz/refs/tags/v1.0.0-alpha.2"
+    sha256 = "9385844d399666894bd4960c39c3e0f1ee04d38878de6c1abbd323fd65ee50d3"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
