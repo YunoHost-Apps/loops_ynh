@@ -71,8 +71,7 @@ popd
 #=================================================
 ynh_script_progression "Tweak database character set..."
 
-ynh_mysql_db_shell \
-<<< "ALTER DATABASE $db_name CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+ynh_mysql_db_shell <<< "ALTER DATABASE $db_name CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
 ynh_script_progression "Run migrations..."
 
@@ -90,7 +89,6 @@ ynh_script_progression "Create admin account..."
 #=================================================
 # QUEUE CONFIGURATION
 #=================================================
-
 ynh_script_progression "Queue configuration..."
 
 # Publish Horizon Configuration
@@ -118,7 +116,6 @@ ynh_config_add_systemd
 
 yunohost service add "$app" --description="Federated short video sharing" --log="/var/log/$app/$app.log"
 
-
 # Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate
 
@@ -131,10 +128,6 @@ sudo chmod -R 775 /var/www/$app/storage
 sudo chmod -R 775 /var/www/$app/bootstrap/cache
 
 ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
 
 pushd "$install_dir"
     $artisan config:cache

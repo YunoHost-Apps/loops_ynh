@@ -38,20 +38,20 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
 
-    [install.language]
-    ask.en = "Choose the application language"
-    ask.fr = "Choisissez la langue de l'application"
-    type = "select"
-    choices = ["fr", "en"]
-    default = "fr"
+    #[install.language]
+    #ask.en = "Choose the application language"
+    #ask.fr = "Choisissez la langue de l'application"
+    #type = "select"
+    #choices = ["fr", "en"]
+    #default = "fr"
 
-    [install.admin]
-    type = "user"
+    #[install.admin]
+    #type = "user"
 
-    [install.password]
-    help.en = "Set the admin password"
-    help.fr = "Définissez le mot de passe de l'administrateur"
-    type = "password"
+    #[install.password]
+    #help.en = "Set the admin password"
+    #help.fr = "Définissez le mot de passe de l'administrateur"
+    #type = "password"
 
 [resources]
 
@@ -63,6 +63,7 @@ ram.runtime = "50M"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
+    allow_email = true
 
     [resources.install_dir]
     group = "www-data:r-x"
