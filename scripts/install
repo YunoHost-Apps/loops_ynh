@@ -123,9 +123,9 @@ ynh_config_add_logrotate
 # ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
 # Set permissions
-chown -R $app:www-data /var/www/loops
-chmod -R 775 /var/www/$app/storage
-chmod -R 775 /var/www/$app/bootstrap/cache
+chown -R $app:www-data $install_dir
+chmod -R 775 $install_dir/storage
+chmod -R 775 $install_dir/bootstrap/cache
 
 ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
 
