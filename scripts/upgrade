@@ -48,8 +48,8 @@ ynh_composer_exec install --no-dev --optimize-autoloader
 ynh_script_progression "Install Node dependencies..."
 
 pushd "$install_dir"
-    ynh_hide_warnings npm install
-    ynh_hide_warnings npm run build
+    ynh_hide_warnings ynh_exec_as_app npm install
+    ynh_hide_warnings ynh_exec_as_app npm run build
 popd
 
 chown -Rv $app:www-data $install_dir
