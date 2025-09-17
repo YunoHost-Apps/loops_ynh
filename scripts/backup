@@ -49,8 +49,8 @@ ynh_backup "/etc/systemd/system/$app.service"
 ynh_backup "/etc/logrotate.d/$app"
 
 # Backup the Fail2Ban config
-ynh_backup "/etc/fail2ban/jail.d/$app.conf"
-ynh_backup "/etc/fail2ban/filter.d/$app.conf"
+# ynh_backup "/etc/fail2ban/jail.d/$app.conf"
+# ynh_backup "/etc/fail2ban/filter.d/$app.conf"
 
 #=================================================
 # BACKUP VARIOUS FILES
