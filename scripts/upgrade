@@ -33,8 +33,6 @@ ynh_script_progression "Upgrading source files..."
 
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env storage"
 
-chown -R "$app:www-data" "$install_dir"
-
 #=================================================
 # COMPOSER
 #=================================================
