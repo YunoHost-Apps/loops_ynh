@@ -119,7 +119,7 @@ ynh_config_add_nginx
 # Create a dedicated systemd config
 ynh_config_add_systemd
 
-yunohost service add "$app" --description="Loops: federated short video sharing" --log="/var/log/$app/$app.log"
+yunohost service add "$app" --description="Federated short video sharing" --log="/var/log/$app/$app.log"
 
 
 # Use logrotate to manage application logfile(s)
