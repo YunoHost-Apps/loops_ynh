@@ -12,7 +12,7 @@ version = "1.0.0-alpha.2~ynh1"
 maintainers = ["Papa Dragon"]
 
 [upstream]
-license = "unlicense" # you can see the available licenses identifiers list here: https://spdx.org/licenses/
+license = "Unlicense" # you can see the available licenses identifiers list here: https://spdx.org/licenses/
 website = "https://joinloops.org"
 admindoc = "https://github.com/joinloops/loops-server/blob/main/INSTALLATION.md"
 code = "https://github.com/joinloops/loops-server"
@@ -26,9 +26,9 @@ multi_instance = false
 ldap = false
 sso = false
 
-disk = "50M"
-ram.build = "50M"
-ram.runtime = "50M"
+disk = "850M"
+ram.build = "1500M"
+ram.runtime = "350M"
 
 [install]
     [install.domain]
