@@ -20,7 +20,7 @@ Federated short video sharing platform
 
 
 ## Screenshots
-![Screenshot of Loops](./doc/screenshots/example.jpeg)
+![Screenshot of Loops](./doc/screenshots/screenshot.jpeg)
 
 ## 📦 Developer info
 
