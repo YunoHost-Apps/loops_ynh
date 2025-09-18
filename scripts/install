@@ -52,7 +52,7 @@ pushd "$install_dir"
     ynh_hide_warnings ynh_exec_as_app npm run build
 popd
 
-chown -Rv $app:www-data $install_dir
+chown -R $app:www-data $install_dir
 
 #=================================================
 # APP INITIAL CONFIGURATION
