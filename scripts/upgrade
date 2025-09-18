@@ -31,9 +31,7 @@ ynh_app_setting_set_default --key=php_memory_limit --value=512M
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env storage"
-
-chown -R "$app:www-data" "$install_dir"
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="storage"
 
 #=================================================
 # COMPOSER
@@ -48,8 +46,8 @@ ynh_composer_exec install --no-dev --optimize-autoloader
 ynh_script_progression "Install Node dependencies..."
 
 pushd "$install_dir"
-    ynh_hide_warnings npm install
-    ynh_hide_warnings npm run build
+    ynh_hide_warnings ynh_exec_as_app npm install
+    ynh_hide_warnings ynh_exec_as_app npm run build
 popd
 
 chown -Rv $app:www-data $install_dir
@@ -57,12 +55,11 @@ chown -Rv $app:www-data $install_dir
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression "Updating $app's configuration files..."
+#ynh_script_progression "Updating $app's configuration files..."
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
 chmod 600 "$install_dir/.env"
-chown "$app:$app" "$install_dir/.env"
 
 #=================================================
 # RUN MIGRATIONS
@@ -102,16 +99,16 @@ ynh_config_add_nginx
 
 ynh_config_add_systemd
 
-yunohost service add "$app" --description="A short description of the app" --log="/var/log/$app/$app.log"
+yunohost service add "$app" --description="Federated short video sharing" --log="/var/log/$app/$app.log"
 
 ynh_config_add_logrotate
 
 # ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
 # Set permissions
-sudo chown -R $app:www-data /var/www/loops
-sudo chmod -R 775 /var/www/$app/storage
-sudo chmod -R 775 /var/www/$app/bootstrap/cache
+chown -R $app:www-data $install_dir
+chmod -R 775 $install_dir/storage
+chmod -R 775 $install_dir/bootstrap/cache
 
 ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
 
