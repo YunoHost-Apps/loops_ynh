@@ -77,8 +77,7 @@ ram.runtime = "350M"
     [install.s3_path_style]
     ask.en = "Use path style endpoints for S3?"
     help.en = "Usually required by third-party providers"
-    type = "select"
-    choices = ["true", "false"]
+    type = "boolean"
 
     [install.s3_endpoint]
     ask.en = "Custom S3 endpoint:"
