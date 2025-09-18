@@ -84,7 +84,7 @@ popd
 ynh_script_progression "Create admin account..."
 
 pushd "$install_dir"
-    $artisan create-admin-account --name="$fullname" --username="$username" --email="$email" --password="password" --force
+    $artisan create-admin-account --name="$fullname" --username="$username" --email="$email" --password="$password" --force
 popd
 
 #=================================================
