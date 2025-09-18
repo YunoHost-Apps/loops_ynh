@@ -90,7 +90,7 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://codeload.github.com/joinloops/loops-server/zip/9be7255253adb2c9d4f590929f572946344eba08"
+    url = "https://github.com/joinloops/loops-server/archive/9be7255253adb2c9d4f590929f572946344eba08.zip"
     sha256 = "3e145828066fee3b96ffdd35e368d95ec414b11bfce2f0dc1dd9bc66d71ec661"
     autoupdate.strategy = "latest_github_release"
 
