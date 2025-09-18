@@ -38,20 +38,53 @@ ram.runtime = "350M"
     type = "group"
     default = "visitors"
 
-    [install.language]
-    ask.en = "Choose the application language"
-    ask.fr = "Choisissez la langue de l'application"
+    #[install.language]
+    #ask.en = "Choose the application language"
+    #ask.fr = "Choisissez la langue de l'application"
+    #type = "select"
+    #choices = ["fr", "en"]
+    #default = "fr"
+
+    #[install.admin]
+    #type = "user"
+
+    #[install.password]
+    #help.en = "Set the admin password"
+    #help.fr = "Définissez le mot de passe de l'administrateur"
+    #type = "password"
+
+    [install.s3_key_id]
+    ask.en = "S3 key ID:"
+    help.en = "Sets the key ID to connect to object storage"
+    type = "string"
+
+    [install.s3_key_secret]
+    ask.en = "S3 key secret:"
+    help.en = "Sets the key secret to connect to object storage"
+    type = "string"
+
+    [install.s3_region]
+    ask.en = "S3 region:"
+    help.en = "Skip this with other object storage providers"
+    type = "string"
+    default = "us-east-1"
+
+    [install.s3_bucket]
+    ask.en = "S3 bucket:"
+    help.en = "Sets the name of the bucket"
+    type = "string"
+
+    [install.s3_path_style]
+    ask.en = "Use path style endpoints for S3?"
+    help.en = "Usually required by third-party providers"
     type = "select"
-    choices = ["fr", "en"]
-    default = "fr"
+    choices = ["true", "false"]
 
-    [install.admin]
-    type = "user"
-
-    [install.password]
-    help.en = "Set the admin password"
-    help.fr = "Définissez le mot de passe de l'administrateur"
-    type = "password"
+    [install.s3_endpoint]
+    ask.en = "Custom S3 endpoint:"
+    help.en = "Required when using a third-party object storage provider (https://<domain>)"
+    type = "string"
+    optional = true
 
 [resources]
 
@@ -63,8 +96,10 @@ ram.runtime = "350M"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
+    allow_email = true
 
     [resources.install_dir]
+    group = "www-data:r-x"
 
     [resources.data_dir]
 
@@ -72,13 +107,13 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.3-redis, php8.3-bcmath, php8.3-cli, php8.3-ctype, php8.3-exif, php8.3-gd, php8.3-iconv, php8.3-intl, php8.3-mbstring, php8.3-tokenizer, php8.3-xml, php8.3-pdo, php8.3-mysql, php8.3-fileinfo, php8.3-imagick, redis-server"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-fileinfo, php8.4-imagick, redis-server"
 
     [resources.database]
     type = "mysql"
 
     [resources.nodejs]
-    version = "22.19"
+    version = "22"
 
     [resources.composer]
     version = "2.8.11"

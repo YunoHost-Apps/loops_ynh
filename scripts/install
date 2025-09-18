@@ -26,8 +26,6 @@ ynh_script_progression "Setting up source files..."
 # Download, check integrity, uncompress and patch the source from manifest.toml
 ynh_setup_source --dest_dir="$install_dir"
 
-chown -R "$app:www-data" "$install_dir"
-
 #=================================================
 # COMPOSER
 #=================================================
@@ -55,7 +53,6 @@ ynh_script_progression "Adding $app's configuration files..."
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
 chmod 600 "$install_dir/.env"
-chown "$app:$app" "$install_dir/.env"
 
 #=================================================
 # ENVIRONMENT CONFIGURATION
@@ -74,8 +71,7 @@ popd
 #=================================================
 ynh_script_progression "Tweak database character set..."
 
-ynh_mysql_db_shell \
-<<< "ALTER DATABASE $db_name CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+ynh_mysql_db_shell <<< "ALTER DATABASE $db_name CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
 ynh_script_progression "Run migrations..."
 
@@ -93,7 +89,6 @@ ynh_script_progression "Create admin account..."
 #=================================================
 # QUEUE CONFIGURATION
 #=================================================
-
 ynh_script_progression "Queue configuration..."
 
 # Publish Horizon Configuration
@@ -121,7 +116,6 @@ ynh_config_add_systemd
 
 yunohost service add "$app" --description="Federated short video sharing" --log="/var/log/$app/$app.log"
 
-
 # Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate
 
@@ -129,15 +123,11 @@ ynh_config_add_logrotate
 # ynh_config_add_fail2ban --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
 # Set permissions
-chown -R $app:www-data /var/www/loops
-chmod -R 775 /var/www/$app/storage
-chmod -R 775 /var/www/$app/bootstrap/cache
+chown -R $app:www-data $install_dir
+chmod -R 775 $install_dir/storage
+chmod -R 775 $install_dir/bootstrap/cache
 
 ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
 
 pushd "$install_dir"
     $artisan config:cache

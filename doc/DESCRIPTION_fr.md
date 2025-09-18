@@ -1,1 +1,1 @@
-Ceci est une fausse description des fonctionalités de l'app
+Partagez, découvrez et créez de courtes vidéos sur les réseaux sociaux. Une alternative open source qui donne la priorité aux créateurs et aux communautés, basée sur une technologie fédérée pour une véritable propriété et confidentialité.
