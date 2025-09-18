@@ -19,3 +19,5 @@ test_format = 1.0
     args.s3_key_secret = "0123456789abcdef01234567890123456789abcdef0123456789"
     args.s3_bucket = "MySuperBucket"
     args.s3_path_style = false
+
+    test_upgrade_from.fc1b3046de7ea17508bff4c3773b1bebf8b1d609.name = "1.0.0-alpha.2~ynh2"

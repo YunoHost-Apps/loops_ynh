@@ -7,7 +7,7 @@ name = "Loops"
 description.en = "Federated short video sharing platform"
 description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
-version = "1.0.0-alpha.2~ynh2"
+version = "1.0.0-alpha.2~ynh3"
 
 maintainers = ["Papa Dragon"]
 
@@ -45,13 +45,13 @@ ram.runtime = "350M"
     #choices = ["fr", "en"]
     #default = "fr"
 
-    #[install.admin]
-    #type = "user"
+    [install.admin]
+    type = "user"
 
-    #[install.password]
-    #help.en = "Set the admin password"
-    #help.fr = "Définissez le mot de passe de l'administrateur"
-    #type = "password"
+    [install.password]
+    help.en = "Set the admin password"
+    help.fr = "Définissez le mot de passe de l'administrateur"
+    type = "password"
 
     [install.s3_key_id]
     ask.en = "S3 key ID:"
@@ -90,8 +90,8 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://codeload.github.com/joinloops/loops-server/tar.gz/refs/tags/v1.0.0-alpha.2"
-    sha256 = "9385844d399666894bd4960c39c3e0f1ee04d38878de6c1abbd323fd65ee50d3"
+    url = "https://github.com/joinloops/loops-server/archive/9be7255253adb2c9d4f590929f572946344eba08.zip"
+    sha256 = "3e145828066fee3b96ffdd35e368d95ec414b11bfce2f0dc1dd9bc66d71ec661"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
