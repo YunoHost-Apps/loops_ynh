@@ -7,7 +7,7 @@ name = "Loops"
 description.en = "Federated short video sharing platform"
 description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
-version = "1.0.0-alpha.2~ynh3"
+version = "1.0.0-alpha.2~ynh4"
 
 maintainers = ["Papa Dragon"]
 
@@ -20,7 +20,7 @@ code = "https://github.com/joinloops/loops-server"
 [integration]
 yunohost = ">= 12.1.17"
 helpers_version = "2.1"
-architectures = ["amd64"]
+architectures = "all"
 multi_instance = false
 
 ldap = false
