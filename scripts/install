@@ -36,6 +36,14 @@ ynh_script_progression "Setting up source files..."
 ynh_setup_source --dest_dir="$install_dir"
 
 #=================================================
+# CONFIGURE REDIS DATABASE
+#=================================================
+ynh_script_progression "Creating a Redis database..."
+
+redis_db=$(ynh_redis_get_free_db)
+ynh_app_setting_set --key=redis_db --value="$redis_db"
+
+#=================================================
 # COMPOSER
 #=================================================
 ynh_script_progression "Pulling in external libraries with Composer..."
