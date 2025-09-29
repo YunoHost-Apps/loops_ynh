@@ -12,7 +12,7 @@ version = "1.0.0-alpha.2~ynh5"
 maintainers = ["Papa Dragon"]
 
 [upstream]
-license = "Unlicense" # you can see the available licenses identifiers list here: https://spdx.org/licenses/
+license = "AGPL-3.0-or-later"
 website = "https://joinloops.org"
 admindoc = "https://github.com/joinloops/loops-server/blob/main/INSTALLATION.md"
 code = "https://github.com/joinloops/loops-server"
