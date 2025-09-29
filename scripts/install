@@ -11,9 +11,9 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
-ynh_app_setting_set_default --key=email --value=$(ynh_user_get_info --username=$admin --key=mail)
-ynh_app_setting_set_default --key=fullname --value=$(ynh_user_get_info --username=$admin --key=fullname)
-ynh_app_setting_set_default --key=username --value=$(ynh_user_get_info --username=$admin --key=username)
+ynh_app_setting_set_default --key=email --value="$(ynh_user_get_info --username=$admin --key=mail)"
+ynh_app_setting_set_default --key=fullname --value="$(ynh_user_get_info --username=$admin --key=fullname)"
+ynh_app_setting_set_default --key=username --value="$(ynh_user_get_info --username=$admin --key=username)"
 ynh_app_setting_set_default --key=php_upload_max_filesize --value=100M
 ynh_app_setting_set_default --key=php_post_max_size --value=100M
 ynh_app_setting_set_default --key=php_max_file_uploads --value=100M
