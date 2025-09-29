@@ -9,7 +9,8 @@ test_format = 1.0
     # Tests to run
     # ------------
     
-    #exclude = ["change_url"]
+    # App is meant to be connected to the fediverse, so change_url is irrelevant
+    exclude = ["change_url"]
 
     # -------------------------------
     # Default args to use for install
