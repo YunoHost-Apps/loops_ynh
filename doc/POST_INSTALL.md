@@ -1,0 +1,2 @@
+Installation of the application is now complete. First thing you should do is **configure the email sending for your server**. If you use SMTP, you can use the app configuration panel within the YunoHost admin interface. You can also check other possibilities in the documentation available in the upstream loops-server repo (https://github.com/joinloops/loops-server/blob/main/INSTALLATION.md#mail-configuration).
+
