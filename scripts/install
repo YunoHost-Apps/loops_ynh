@@ -112,10 +112,6 @@ pushd "$install_dir"
     $artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"
 popd
 
-# Configure Horizon
-# FIXME: We need to figure out horizon.php should be edited
-# https://github.com/joinloops/loops-server/blob/main/INSTALLATION.md#2-configure-horizon
-
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
