@@ -8,7 +8,7 @@ name.en = "Config panel"
 name.fr = "Panneau de configuration"
 
 help.en = "Configuration of your Loops server."
-help.en = "Configuration de votre serveur Loops."
+help.fr = "Configuration de votre serveur Loops."
 
     ################
     #### SMTP CONFIG
