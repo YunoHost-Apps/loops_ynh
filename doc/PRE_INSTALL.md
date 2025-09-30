@@ -1,0 +1,1 @@
+**S3-Compatible Storage Required**. Currently, Loops **requires an S3-compatible filesystem** (like AWS S3, MinIO, or DigitalOcean Spaces) for avatar and video storage. Support for local storage is on the way but is not yet implemented. **Please ensure you have S3 credentials ready before proceeding**.
