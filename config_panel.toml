@@ -27,6 +27,11 @@ help.fr = "Configuration pour l’envoi de courriels via un serveur SMTP."
     type = "boolean"
     default = false
 
+    [main.smtp.smtp_mailer]
+    visible = "smtp_enabled"
+    default = "smtp"
+    bind = "MAIL_MAILER:__INSTALL_DIR__/.env"
+
     [main.smtp.smtp_host]
     ask.en = "SMTP Server Hostname"
     ask.fr = "Nom d'hôte du serveur SMTP"
