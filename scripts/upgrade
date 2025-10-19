@@ -85,6 +85,14 @@ pushd "$install_dir"
     $artisan view:cache
 popd
 
+# Generate Passport Keys
+pushd "$install_dir"
+    if [ ! -d "$install_dir/vendor/laravel/passport" ]
+    then
+        $artisan passport:keys
+    fi
+popd
+
 #=================================================
 # REAPPLY SYSTEM CONFIGURATION
 #=================================================
