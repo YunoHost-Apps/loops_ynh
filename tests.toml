@@ -21,4 +21,4 @@ test_format = 1.0
     args.s3_bucket = "MySuperBucket"
     args.s3_path_style = false
 
-    test_upgrade_from.bc203e8142398e9364820c5c45a68c3f9bf81e5f.name = "1.0.0-alpha.2~ynh5"
+    test_upgrade_from.490e98e57684444d92567909e4ed38f7350ac4cb.name = "1.0.0-beta.1~ynh2"
