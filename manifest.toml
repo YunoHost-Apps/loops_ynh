@@ -90,8 +90,8 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/refs/tags/v1.0.0-beta.2.zip"
-    sha256 = "98b5b8c33c951e63d213b05cf8bb332b97d14646344401adf92b708fdf081565"
+    url = "https://github.com/joinloops/loops-server/archive/c78cbe9e1a1a69899d398ebe9de4a079d799cfd6.zip"
+    sha256 = "f897ae77ad4a02c1d8cc709f169be10387697e476703e57ee19a31e9ad211e56"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
