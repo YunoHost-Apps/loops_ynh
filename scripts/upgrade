@@ -87,7 +87,7 @@ popd
 
 # Generate Passport Keys
 pushd "$install_dir"
-    if [ ! -d "$install_dir/vendor/laravel/passport" ]
+    if [ ! -f storage/oauth-private.key ]
     then
         $artisan passport:keys
     fi
