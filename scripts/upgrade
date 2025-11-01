@@ -87,7 +87,7 @@ popd
 
 # Generate Passport Keys
 pushd "$install_dir"
-    if [ ! -d "$install_dir/vendor/laravel/passport" ]
+    if [ ! -f storage/oauth-private.key ]
     then
         $artisan passport:keys
     fi
@@ -114,6 +114,7 @@ ynh_config_add_logrotate
 chown -R $app:www-data $install_dir
 chmod -R 775 $install_dir/storage
 chmod -R 775 $install_dir/bootstrap/cache
+chmod 660 $install_dir/storage/oauth-p*
 
 ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
 
