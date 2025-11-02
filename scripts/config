@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+ynh_abort_if_errors
+
+# Apply Yunohost app's config
+ynh_app_config_apply() {
+    _ynh_app_config_apply
+
+    artisan="ynh_exec_as_app php$php_version artisan"
+
+    if [[ "${changed[smtp_host]}" == "true" || "${changed[smtp_port]}" == "true"  || "${changed[smtp_username]}" == "true" || "${changed[smtp_password]}" == "true" || "${changed[smtp_from]}" == "true" ]]
+    then
+        pushd "$install_dir"
+            $artisan queue:restart
+            $artisan config:clear
+            $artisan cache:clear
+            $artisan config:cache
+            $artisan optimize:clear
+            ynh_systemctl --service="php$php_version-fpm" --action="restart"
+        popd
+    fi
+}
+
+ynh_app_config_run $1
