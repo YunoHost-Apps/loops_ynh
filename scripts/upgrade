@@ -59,6 +59,15 @@ popd
 chown -R $app:www-data $install_dir
 
 #=================================================
+# DB FIX
+#=================================================
+ynh_script_progression "Database fix..."
+if [ -z "$(grep DB_STRICT $install_dir/.env)" ]
+then 
+    ynh_hide_warnings ynh_exec_as_app sed -i '29 aDB_STRICT=false' $install_dir/.env
+fi
+
+#=================================================
 # RUN MIGRATIONS
 #=================================================
 ynh_script_progression "Running migrations..."
