@@ -7,7 +7,7 @@ name = "Loops"
 description.en = "Federated short video sharing platform"
 description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
-version = "1.0.0-beta.4~ynh1"
+version = "1.0.0-beta.4~ynh3"
 
 maintainers = ["Papa Dragon"]
 
@@ -90,8 +90,8 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/refs/tags/v1.0.0-beta.4.zip"
-    sha256 = "fbd65c1f0ee49245b361171100cb2a0a7556133bf81a247d4b3f975063f2f427"
+    url = "https://github.com/joinloops/loops-server/archive/7a500dfaebd0869147c4ea20fd0159d8b0be70f1.zip"
+    sha256 = "d599ed79dc26e11da9e5fc827f299348568157de62914a3f8bf683e95cf929e5"
     autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
@@ -106,7 +106,7 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-fileinfo, php8.4-imagick, redis-server"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server"
 
     [resources.database]
     type = "mysql"

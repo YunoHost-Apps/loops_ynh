@@ -52,7 +52,7 @@ ynh_composer_exec install --no-dev --optimize-autoloader
 ynh_script_progression "Install Node dependencies..."
 
 pushd "$install_dir"
-    ynh_hide_warnings ynh_exec_as_app npm install
+    ynh_hide_warnings ynh_exec_as_app npm ci
     ynh_hide_warnings ynh_exec_as_app npm run build
 popd
 
@@ -61,9 +61,10 @@ chown -R $app:www-data $install_dir
 #=================================================
 # DB FIX
 #=================================================
-ynh_script_progression "Database fix..."
+# Not needed since 1.0.0-beta.4-ynh1
 if [ -z "$(grep DB_STRICT $install_dir/.env)" ]
-then 
+then
+    ynh_script_progression "Database fix..."
     ynh_hide_warnings ynh_exec_as_app sed -i '29 aDB_STRICT=false' $install_dir/.env
 fi
 
