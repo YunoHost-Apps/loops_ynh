@@ -81,15 +81,15 @@ popd
 
 ynh_script_progression "Clearing and rebuilding caches..."
 
-# Clear caches
+
 pushd "$install_dir"
+    $artisan queue:restart
+    # Clear caches
     $artisan cache:clear
     $artisan config:clear
     $artisan view:clear
-popd
-
-# Rebuild caches
-pushd "$install_dir"
+    $artisan optimize:clear
+    # Rebuild caches
     $artisan config:cache
     $artisan route:cache
     $artisan view:cache
