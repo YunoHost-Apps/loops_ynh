@@ -85,6 +85,25 @@ ram.runtime = "350M"
     type = "string"
     optional = true
 
+    [install.mail.mailer]
+    ask.en = "Choose a mail provider"
+    halp.en = "This is mandatory"
+    type = "string"
+    choices.smtp = "SMTP"
+    choices.mailgun = "Mailgun"
+    choices.postmark = "Postmark"
+    choices.resend = "Resend"
+
+    [install.mail.smtp_host]
+    ask.en = "SMTP Server Hostname"
+    ask.fr = "Nom d'hôte du serveur SMTP"
+    visible = "mailer==smtp"
+    bind = "MAIL_HOST:__INSTALL_DIR__/.env"
+    default = "localhost"
+    help.en = "The hostname of the SMTP server you want to use. Examples: mail.example.org, localhost"
+    help.fr = "Le nom d'hôte du serveur SMTP que vous souhaitez utiliser. Exemples: mail.example.org, localhost"
+    type = "string"    
+
 [resources]
 
     [resources.sources]
