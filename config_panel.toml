@@ -11,15 +11,15 @@ help.en = "Configuration of your Loops server."
 help.fr = "Configuration de votre serveur Loops."
 
     ################
-    #### SMTP CONFIG
+    #### MAIL CONFIG
     ################
 
 [main.smtp]
 
 name = "SMTP config"
 
-help.en = "Config for sending emails via an SMTP server."
-help.fr = "Configuration pour l’envoi de courriels via un serveur SMTP."
+help.en = "Email provider configuration."
+help.fr = "Configuration du service d’envoi de courrier électronique."
 
     [main.smtp.smtp_enabled]
     ask.en = "Configure SMTP email? (recommended)"
