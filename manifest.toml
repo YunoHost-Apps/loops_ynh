@@ -85,7 +85,7 @@ ram.runtime = "350M"
     type = "string"
     optional = true
 
-    [install.mailer]
+    [install.mail_mailer]
     ask.en = "Choose a mail provider"
     ask.fr = "Choisissez un service pour l’envoi des courriels"
     type = "string"
