@@ -71,6 +71,28 @@ ynh_config_add --template=".env" --destination="$install_dir/.env"
 
 chmod 600 "$install_dir/.env"
 
+# Mail configuration
+ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value="$(ynh_app_setting_get --key=mail_mailer)"
+if [ $(ynh_app_setting_get --key=mail_mailer) == "smtp" ]
+then
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_HOST --value="$(ynh_app_setting_get --key=smtp_host)"
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_PORT --value="$(ynh_app_setting_get --key=smtp_port)"
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_USERNAME --value="$(ynh_app_setting_get --key=smtp_username)"
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_PASSWORD --value="$(ynh_app_setting_get --key=smtp_password)"
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION --value="$(ynh_app_setting_get --key=smtp_encryption)"
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_FROM_ADDRESS --value="$(ynh_app_setting_get --key=smtp_from)"
+elif [ $(ynh_app_setting_get --key=mail_mailer) == "mailgun" ]
+then
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAILGUN_DOMAIN --value="$(ynh_app_setting_get --key=mailgun_domain)"
+    ynh_write_var_in_file --file=$install_dir/.env --key=MAILGUN_SECRET --value="$(ynh_app_setting_get --key=mailgun_secret)"
+elif [ $(ynh_app_setting_get --key=mail_mailer) == "postmark" ]
+then
+    ynh_write_var_in_file --file=$install_dir/.env --key=POSTMARK_TOKEN --value="$(ynh_app_setting_get --key=postmark_token)"
+elif [ $(ynh_app_setting_get --key=mail_mailer) == "resend" ]
+then
+    ynh_write_var_in_file --file=$install_dir/.env --key=RESEND_KEY --value="$(ynh_app_setting_get --key=resend_key)"
+fi
+
 #=================================================
 # ENVIRONMENT CONFIGURATION
 #=================================================

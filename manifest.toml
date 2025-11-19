@@ -109,10 +109,10 @@ ram.runtime = "350M"
     ask.fr = "Port SMTP"
     visible = "mailer == 'smtp'"
     bind = "MAIL_PORT:__INSTALL_DIR__/.env"
-    help.en = "Port to use to connect to the SMTP server"
-    help.fr = "Port à utiliser pour se connecter au serveur SMTP"
+    help.en = "Port to use to connect to the SMTP server (usually 587, but could be 465 or 2525 depending on your provider)"
+    help.fr = "Port à utiliser pour se connecter au serveur SMTP (habituellement 587, peut aussi être 465 ou 2525 en fonction du service)"
     type = "string"
-    example = "587"
+    default = "587"
 
     [install.smtp_username]
     ask.en = "SMTP Username"
@@ -152,6 +152,7 @@ ram.runtime = "350M"
     help.en = "From address for sent emails"
     help.fr = "L'adresse utilisée pour les e-mails envoyés"
     type = "email"
+    example = "loops@__DOMAIN__"
 
     [install.mailgun_domain]
     ask.en = "Mailgun domain"
