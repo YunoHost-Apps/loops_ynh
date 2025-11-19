@@ -17,7 +17,7 @@ help.fr = "Configuration de votre serveur Loops."
 [main.mail]
 
 name.en = "Email"
-name.en = "Courriel"
+name.fr = "Courriel"
 
 help.en = "Email provider configuration."
 help.fr = "Configuration du service d’envoi de courrier électronique."
