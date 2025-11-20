@@ -11,7 +11,12 @@ ynh_app_config_apply() {
 
     artisan="ynh_exec_as_app php$php_version artisan"
 
-    if [[ "${changed[smtp_host]}" == "true" || "${changed[smtp_port]}" == "true"  || "${changed[smtp_username]}" == "true" || "${changed[smtp_password]}" == "true" || "${changed[smtp_from]}" == "true" ]]
+    if [ $smtp_enabled -eq 1 ]
+    then
+        ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value=smtp
+    fi
+
+    if [[ "${changed[smtp_host]}" == "true" || "${changed[smtp_port]}" == "true"  || "${changed[smtp_username]}" == "true" || "${changed[smtp_password]}" == "true" || "${changed[smtp_encryption]}" == "true" || "${changed[smtp_from]}" == "true" ]]
     then
         pushd "$install_dir"
             $artisan queue:restart

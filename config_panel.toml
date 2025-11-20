@@ -16,7 +16,8 @@ help.fr = "Configuration de votre serveur Loops."
 
 [main.smtp]
 
-name = "SMTP config"
+name.en = "SMTP config"
+name.fr = "Configuration SMTP"
 
 help.en = "Config for sending emails via an SMTP server."
 help.fr = "Configuration pour l’envoi de courriels via un serveur SMTP."
