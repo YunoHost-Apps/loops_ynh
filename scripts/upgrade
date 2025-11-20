@@ -22,7 +22,7 @@ ynh_script_progression "Ensuring downward compatibility..."
 if ynh_app_upgrading_from_version_before 1.0.0-beta.4~ynh9
 then
     ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=APP_KEY)"
-    if [ if $(ynh_app_setting_get --key=smtp_enabled) -eq 1 ]
+    if [ $(ynh_app_setting_get --key=smtp_enabled) -eq 1 ]
     then
         ynh_app_setting_set_default --key=mail_mailer --value=smtp
         ynh_app_setting_delete --key=smtp_enabled
