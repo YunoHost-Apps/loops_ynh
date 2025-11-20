@@ -159,6 +159,12 @@ ynh_script_progression "Starting $app's systemd service..."
 ynh_systemctl --service="$app" --action="start"
 
 #=================================================
+# SAVE APP_KEY
+#=================================================
+# We'll need it for future updates
+ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=APP_KEY)"
+
+#=================================================
 # END OF SCRIPT
 #=================================================
 
