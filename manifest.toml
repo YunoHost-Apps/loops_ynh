@@ -85,20 +85,16 @@ ram.runtime = "350M"
     type = "string"
     optional = true
 
-    [install.mail_mailer]
-    ask.en = "Choose a mail provider"
-    ask.fr = "Choisissez un service pour l’envoi des courriels"
-    type = "select"
-    choices.smtp = "SMTP"
-    choices.mailgun = "Mailgun"
-    choices.postmark = "Postmark"
-    choices.resend = "Resend"
-    default = "smtp"
+    [install.smtp_enabled]
+    ask.en = "Configure SMTP email? (recommended)"
+    ask.fr = "Configurer SMTP pour l’envoi de courriels? (recommandé)"
+    type = "boolean"
+    default = true
 
     [install.smtp_host]
     ask.en = "SMTP Server Hostname"
     ask.fr = "Nom d'hôte du serveur SMTP"
-    enabled = "mail_mailer == 'smtp'"
+    visible = "smtp_enabled"
     default = "localhost"
     help.en = "The hostname of the SMTP server you want to use. Examples: mail.example.org, localhost"
     help.fr = "Le nom d'hôte du serveur SMTP que vous souhaitez utiliser. Exemples: mail.example.org, localhost"
@@ -107,7 +103,7 @@ ram.runtime = "350M"
     [install.smtp_port]
     ask.en = "SMTP Port"
     ask.fr = "Port SMTP"
-    enabled = "mail_mailer == 'smtp'"
+    visible = "smtp_enabled"
     help.en = "Port to use to connect to the SMTP server (usually 587, but could be 465 or 2525 depending on your provider)"
     help.fr = "Port à utiliser pour se connecter au serveur SMTP (habituellement 587, peut aussi être 465 ou 2525 en fonction du service)"
     type = "string"
@@ -116,7 +112,7 @@ ram.runtime = "350M"
     [install.smtp_username]
     ask.en = "SMTP Username"
     ask.fr = "Nom d'utilisateur SMTP"
-    enabled = "mail_mailer == 'smtp'"
+    visible = "smtp_enabled"
     help.en = "Username to use when authenticating with the SMTP server"
     help.fr = "Nom d'utilisateur à utiliser lors de l'authentification avec le serveur SMTP"
     type = "string"
@@ -124,7 +120,7 @@ ram.runtime = "350M"
     [install.smtp_password]
     ask.en = "SMTP Password"
     ask.fr = "Mot de passe SMTP"
-    enabled = "mail_mailer == 'smtp'"
+    visible = "smtp_enabled"
     help.en = "Password to use when authenticating with the SMTP server"
     help.fr = "Mot de passe à utiliser lors de l'authentification avec le serveur SMTP"
     type = "password"
@@ -132,7 +128,7 @@ ram.runtime = "350M"
     [install.smtp_encryption]
     ask.en = "SMTP Encrytion"
     ask.fr = "Type de chiffrement"
-    enabled = "mail_mailer == 'smtp'"
+    visible = "smtp_enabled"
     default = "localhost"
     help.en = "The hostname of the SMTP server you want to use. Examples: mail.example.org, localhost"
     help.fr = "Le nom d'hôte du serveur SMTP que vous souhaitez utiliser. Exemples: mail.example.org, localhost"
@@ -143,35 +139,45 @@ ram.runtime = "350M"
     [install.smtp_from]
     ask.en = "SMTP From Address"
     ask.fr = "Adresse d'expédition SMTP"
-    enabled = "mail_mailer == 'smtp'"
+    visible = "smtp_enabled"
     help.en = "From address for sent emails"
     help.fr = "L'adresse utilisée pour les e-mails envoyés"
     type = "email"
-    example = "loops@__DOMAIN__"
+    example = "loops@example.com"
+
+    [install.provider_enabled]
+    ask.en = "Configure SMTP email? (recommended)"
+    ask.fr = "Configurer SMTP pour l’envoi de courriels? (recommandé)"
+    type = "boolean"
+    default = true
 
     [install.mailgun_domain]
     ask.en = "Mailgun domain"
     ask.fr = "Domaine Mailgun"
-    enabled = "mail_mailer == 'mailgun'"
+    visible = "mail_mailer == 'mailgun'"
     type = "string"
+    optional = true
 
     [install.mailgun_secret]
     ask.en = "Mailgun secret"
     ask.fr = "Clé secrète Mailgun"
-    enabled = "mail_mailer == 'mailgun'"
+    visible = "mail_mailer == 'mailgun'"
     type = "string"
+    optional = true
 
     [install.postmark_token]
     ask.en = "Postmark token"
     ask.fr = "Token Postmark"
-    enabled = "mail_mailer == 'postmark'"
+    visible = "mail_mailer == 'postmark'"
     type = "string"
+    optional = true
 
     [install.resend_key]
     ask.en = "Resend key"
     ask.fr = "Clé Resend"
-    enabled = "mail_mailer == 'resend'"
+    visible = "mail_mailer == 'resend'"
     type = "string"
+    optional = true
 
 [resources]
 
