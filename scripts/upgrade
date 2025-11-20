@@ -22,17 +22,18 @@ ynh_script_progression "Ensuring downward compatibility..."
 if ynh_app_upgrading_from_version_before 1.0.0-beta.4~ynh9
 then
     ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=APP_KEY)"
-fi
-ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
-if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "smtp" ]
-then
+    ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
     ynh_app_setting_set_default --key=smtp_port --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PORT)"
+    ynh_app_setting_set_default --key=smtp_username --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_USERNAME)"
     if [ -z $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION) ]
     then
         ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION --value="tls"
     fi
     ynh_app_setting_set_default --key=smtp_encryption --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION)"
-elif [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
+    ynh_app_setting_set_default --key=smtp_from --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_FROM_ADDRESS)"
+fi
+ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
+if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
 then
     mailgun_domain=$(grep ^MAILGUN_DOMAIN $install_dir/.env)
     mailgun_secret=$(grep ^MAILGUN_SECRET $install_dir/.env)
@@ -93,7 +94,7 @@ ynh_write_var_in_file --file=$install_dir/.env --key=APP_KEY --value="$(ynh_app_
 chmod 600 "$install_dir/.env"
 
 #=================================================
-# APP CONFIGURATION
+# MAIL CONFIGURATION
 #=================================================
 ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value="$(ynh_app_setting_get --key=mail_mailer)"
 if [[ $(ynh_app_setting_get --key=mail_mailer) == "smtp" ]]
