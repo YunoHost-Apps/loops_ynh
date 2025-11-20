@@ -23,7 +23,7 @@ if ynh_app_upgrading_from_version_before 1.0.0-beta.4~ynh9
 then
     ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=APP_KEY)"
 fi
-ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
+ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
 if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
 then
     mailgun_domain=$(grep ^MAILGUN_DOMAIN $install_dir/.env)
