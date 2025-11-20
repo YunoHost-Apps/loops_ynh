@@ -93,6 +93,7 @@ ram.runtime = "350M"
     choices.mailgun = "Mailgun"
     choices.postmark = "Postmark"
     choices.resend = "Resend"
+    default = "smtp"
 
     [install.smtp_host]
     ask.en = "SMTP Server Hostname"
