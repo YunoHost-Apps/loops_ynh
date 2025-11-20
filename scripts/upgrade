@@ -27,19 +27,39 @@ then
         ynh_app_setting_set_default --key=mail_mailer --value=smtp
         ynh_app_setting_delete --key=smtp_enabled
         ynh_app_setting_set_default --key=smtp_port --value=$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PORT)
-    elif [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
+        ynh_app_setting_set_default --key=mailgun_domain --value="null"
+        ynh_app_setting_set_default --key=mailgun_secret --value="null"
+        ynh_app_setting_set_default --key=postmark_token --value="null"
+        ynh_app_setting_set_default --key=resend_key --value="null"
+    else
+        ynh_app_setting_set_default --key=smtp_host --value="null"
+        ynh_app_setting_set_default --key=smtp_port --value="null"
+        ynh_app_setting_set_default --key=smtp_username --value="null"
+        ynh_app_setting_set_default --key=smtp_password --value="null"
+        ynh_app_setting_set_default --key=smtp_encryption --value="null"
+        ynh_app_setting_set_default --key=smtp_from --value="null"
+    fi
+    if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
     then
         ynh_app_setting_set_default --key=mail_mailer --value=mailgun
         ynh_app_setting_set_default --key=mailgun_domain --value=$(ynh_read_var_in_file --file=$install_dir/.env --key=MAILGUN_DOMAIN)
         ynh_app_setting_set_default --key=mailgun_secret --value=$(ynh_read_var_in_file --file=$install_dir/.env --key=MAILGUN_SECRET)
+        ynh_app_setting_set_default --key=postmark_token --value="null"
+        ynh_app_setting_set_default --key=resend_key --value="null"
     elif [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "postmark" ]
     then
         ynh_app_setting_set_default --key=mail_mailer --value=postmark
         ynh_app_setting_set_default --key=postmark_token --value=$(ynh_read_var_in_file --file=$install_dir/.env --key=POSTMARK_TOKEN)
+        ynh_app_setting_set_default --key=mailgun_domain --value="null"
+        ynh_app_setting_set_default --key=mailgun_secret --value="null"
+        ynh_app_setting_set_default --key=resend_key --value="null"
     elif [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "resend" ]
     then
         ynh_app_setting_set_default --key=mail_mailer --value=resend
         ynh_app_setting_set_default --key=resend_key --value=$(ynh_read_var_in_file --file=$install_dir/.env --key=RESEND_KEY)
+        ynh_app_setting_set_default --key=mailgun_domain --value="null"
+        ynh_app_setting_set_default --key=mailgun_secret --value="null"
+        ynh_app_setting_set_default --key=postmark_token --value="null"
     fi
 fi
 ynh_app_setting_set_default --key=php_upload_max_filesize --value=100M
