@@ -71,11 +71,11 @@ help.fr = "Configuration pour l’envoi de courriels via un serveur SMTP."
     ask.fr = "Chiffrement"
     visible = "smtp_enabled"
     bind = "MAIL_ENCRYPTION:__INSTALL_DIR__/.env"
-    default = "null"
+    default = "tls"
     help.en = "Encryption protocol to use to connect to the SMTP server"
     help.fr = "Protocole de chiffrement à utiliser pour se connecter au serveur SMTP"
     type = "select"
-    choices.null = "TLS"
+    choices.tls = "TLS"
     choices.ssl = "SSL"
 
     [main.smtp.smtp_from]
