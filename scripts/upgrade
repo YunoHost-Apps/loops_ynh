@@ -88,7 +88,7 @@ chmod 600 "$install_dir/.env"
 # APP CONFIGURATION
 #=================================================
 ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value="$(ynh_app_setting_get --key=mail_mailer)"
-if [ $(ynh_app_setting_get --key=mail_mailer) == "smtp" ]
+if [[ $(ynh_app_setting_get --key=mail_mailer) == "smtp" ]]
 then
     ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_HOST --value="$(ynh_app_setting_get --key=smtp_host)"
     ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_PORT --value="$(ynh_app_setting_get --key=smtp_port)"
@@ -96,14 +96,14 @@ then
     ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_PASSWORD --value="$(ynh_app_setting_get --key=smtp_password)"
     ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION --value="$(ynh_app_setting_get --key=smtp_encryption)"
     ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_FROM_ADDRESS --value="$(ynh_app_setting_get --key=smtp_from)"
-elif [ $(ynh_app_setting_get --key=mail_mailer) == "mailgun" ]
+elif [[ $(ynh_app_setting_get --key=mail_mailer) == "mailgun" ]]
 then
     ynh_hide_warnings ynh_exec_as_app sed -i "59 aMAILGUN_SECRET=$mailgun_secret" $install_dir/.env
     ynh_hide_warnings ynh_exec_as_app sed -i "59 aMAILGUN_DOMAIN=$mailgun_domain" $install_dir/.env
-elif [ $(ynh_app_setting_get --key=mail_mailer) == "postmark" ]
+elif [[ $(ynh_app_setting_get --key=mail_mailer) == "postmark" ]]
 then
     ynh_hide_warnings ynh_exec_as_app sed -i "59 aPOSTMARK_TOKEN=$postmark_token" $install_dir/.env
-elif [ $(ynh_app_setting_get --key=mail_mailer) == "resend" ]
+elif [[ $(ynh_app_setting_get --key=mail_mailer) == "resend" ]]
 then
     ynh_hide_warnings ynh_exec_as_app sed -i "59 aRESEND_KEY=$resend_key" $install_dir/.env
 fi
