@@ -27,7 +27,7 @@ ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --
 if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "smtp" ]
 then
     ynh_app_setting_set_default --key=smtp_port --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PORT)"
-    ynh_app_setting_set_default --key=smtp_encryption --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=ENCRYPTION)"
+    ynh_app_setting_set_default --key=smtp_encryption --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION)"
 elif [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
 then
     mailgun_domain=$(grep ^MAILGUN_DOMAIN $install_dir/.env)
