@@ -27,7 +27,7 @@ ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --
 if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "smtp" ]
 then
     ynh_app_setting_set_default --key=smtp_port --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PORT)"
-    if [ -z $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) ]
+    if [ -z $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION) ]
     then
         ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION --value="tls"
     fi
