@@ -14,6 +14,13 @@ ynh_app_config_apply() {
     if [ $smtp_enabled -eq 1 ]
     then
         ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value=smtp
+        ynh_app_setting_set --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
+        ynh_app_setting_set --key=smtp_host --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_HOST)"
+        ynh_app_setting_set --key=smtp_port --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PORT)"
+        ynh_app_setting_set --key=smtp_username --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_USERNAME)"
+        ynh_app_setting_set --key=smtp_password --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PASSWORD)"
+        ynh_app_setting_set --key=smtp_encryption --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION)"
+        ynh_app_setting_set --key=smtp_from --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_FROM_ADDRESS)"
     fi
 
     if [[ "${changed[smtp_host]}" == "true" || "${changed[smtp_port]}" == "true"  || "${changed[smtp_username]}" == "true" || "${changed[smtp_password]}" == "true" || "${changed[smtp_encryption]}" == "true" || "${changed[smtp_from]}" == "true" ]]

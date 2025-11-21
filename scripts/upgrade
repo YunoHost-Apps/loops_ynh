@@ -19,11 +19,14 @@ ynh_systemctl --service="$app" --action="stop"
 #=================================================
 ynh_script_progression "Ensuring downward compatibility..."
 
-if ynh_app_upgrading_from_version_before 1.0.0-beta.4~ynh9
-then
-    ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=APP_KEY)"
-fi
+ynh_app_setting_set_default --key=app_key --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=APP_KEY)"
 ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
+ynh_app_setting_set_default --key=smtp_host --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_HOST)"
+ynh_app_setting_set_default --key=smtp_port --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PORT)"
+ynh_app_setting_set_default --key=smtp_username --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_USERNAME)"
+ynh_app_setting_set_default --key=smtp_password --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_PASSWORD)"
+ynh_app_setting_set_default --key=smtp_encryption --value="tls"
+ynh_app_setting_set_default --key=smtp_from --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_FROM_ADDRESS)"
 if [ $(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER) = "mailgun" ]
 then
     mailgun_domain=$(grep ^MAILGUN_DOMAIN $install_dir/.env)
@@ -85,7 +88,7 @@ ynh_write_var_in_file --file=$install_dir/.env --key=APP_KEY --value="$(ynh_app_
 chmod 600 "$install_dir/.env"
 
 #=================================================
-# APP CONFIGURATION
+# MAIL CONFIGURATION
 #=================================================
 ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value="$(ynh_app_setting_get --key=mail_mailer)"
 if [[ $(ynh_app_setting_get --key=mail_mailer) == "smtp" ]]
