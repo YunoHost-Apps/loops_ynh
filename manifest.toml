@@ -92,8 +92,6 @@ ram.runtime = "350M"
     [resources.sources.main]
     url = "https://github.com/joinloops/loops-server/archive/d25b1006ee6157b3fbf7cdd79644590907f1b50a.zip"
     sha256 = "cc6190b523142da90f048538edbc32eb8d0e309e7ea94d370a445eff341378cc"
-    autoupdate.strategy = "latest_github_tag"
-    autoupdate.version_regex = "^v(.*)$"
 
     [resources.system_user]
     allow_email = true
