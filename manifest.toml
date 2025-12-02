@@ -90,8 +90,8 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/b0315ba5eb6671e1c18a14ff1223b6e0ae6ba3cc.zip"
-    sha256 = "3e289ffbc8bf527ad673bfe87ef6a16d4d019982291ab440c16d7b8f09d7d05a"
+    url = "https://github.com/joinloops/loops-server/archive/19f22ed88a5f6d40458d3fae46cf0ca0a652e45a.zip"
+    sha256 = "05f3878cc07857e66fbfef81773b1e7fb08a31f45b504beb995d0833bfee7263"
 
     [resources.system_user]
     allow_email = true
