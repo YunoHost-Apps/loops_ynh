@@ -69,18 +69,18 @@ chown -R $app:www-data $install_dir
 ynh_print_info "Installing RedisBloom (latest version)"
 
 # Download and extract source using Yunohost helper
-ynh_setup_source --source_id="redisbloom" --dest_dir="$install_dir/redisbloom"
+tmpdir="$(mktemp -d)"
+ynh_setup_source --source_id="redisbloom" --dest_dir="$tmpdir"
 
 # Build module
-ynh_exec_as_app cd $install_dir/redisbloom
-ynh_exec_as_app make
+make -C "$tmpdir"
 
 # Install module
-ynh_exec_as_app mkdir -p /etc/redis/modules
-ynh_exec_as_app install -m 644 bin/redisbloom.so /etc/redis/modules/redisbloom.so
+mkdir -p /etc/redis/modules
+install -m 644 "$tmpdir/bin/redisbloom.so" /etc/redis/modules/redisbloom.so
 
 # Create module config
-ynh_exec_as_app cat > /etc/redis/modules/redisbloom.conf <<EOF
+cat > /etc/redis/modules/redisbloom.conf <<EOF
 loadmodule /etc/redis/modules/redisbloom.so
 EOF
 
@@ -90,7 +90,7 @@ if ! grep -q "redisbloom.conf" /etc/redis/redis.conf; then
 fi
 
 # Clean up build directory
-ynh_secure_remove --file="$install_dir/redisbloom"
+ynh_secure_remove --file="$tmpdir"
 
 # Restart Redis
 ynh_systemctl --service="redis-server" --action="restart"
