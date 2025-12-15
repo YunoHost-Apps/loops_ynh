@@ -49,31 +49,31 @@ ynh_app_setting_set --key=redis_db --value="$redis_db"
 
 ynh_print_info "Installing RedisBloom (latest version)"
 
-LATEST_VERSION=$(get_latest_redisbloom_version)
-ynh_print_info "Latest RedisBloom version detected: $LATEST_VERSION"
+# Download and extract source using Yunohost helper
+ynh_setup_source --source="redisbloom" --dest_dir="/tmp/redisbloom-src"
 
-ynh_install_app_dependencies build-essential git make curl
-
-mkdir -p /etc/redis/modules
-
-rm -rf /tmp/redisbloom-src
-cd /tmp
-git clone --branch "$LATEST_VERSION" https://github.com/RedisBloom/RedisBloom.git redisbloom-src
-cd redisbloom-src
-
+# Build module
+cd /tmp/redisbloom-src
 make
 
+# Install module
+mkdir -p /etc/redis/modules
 install -m 644 bin/redisbloom.so /etc/redis/modules/redisbloom.so
 
+# Create module config
 cat > /etc/redis/modules/redisbloom.conf <<EOF
 loadmodule /etc/redis/modules/redisbloom.so
 EOF
 
+# Ensure redis.conf includes module
 if ! grep -q "redisbloom.conf" /etc/redis/redis.conf; then
     echo "include /etc/redis/modules/redisbloom.conf" >> /etc/redis/redis.conf
 fi
 
-# ✅ Yunohost‑compliant restart
+# Clean up build directory
+ynh_secure_remove --file="/tmp/redisbloom-src"
+
+# Restart Redis
 ynh_systemctl --service="redis-server" --action="restart"
 
 ynh_print_info "RedisBloom installed successfully"
