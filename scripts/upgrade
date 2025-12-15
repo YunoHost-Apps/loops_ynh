@@ -67,39 +67,36 @@ ynh_print_info "Upgrading RedisBloom module"
 MODULE_PATH="/etc/redis/modules/redisbloom.so"
 MODULE_CONF="/etc/redis/modules/redisbloom.conf"
 
-LATEST_VERSION=$(get_latest_redisbloom_version)
-ynh_print_info "Latest RedisBloom version detected: $LATEST_VERSION"
+# Ensure module directory exists
+mkdir -p /etc/redis/modules
 
-ynh_install_app_dependencies build-essential git make curl
+# Download and extract source
+ynh_setup_source --source="redisbloom" --dest_dir="/tmp/redisbloom-src"
 
-if [ -f "$MODULE_PATH" ]; then
-    ynh_print_info "RedisBloom already installed — updating to latest version"
-else
-    ynh_print_info "RedisBloom not installed — installing latest version"
-    mkdir -p /etc/redis/modules
-fi
-
-rm -rf /tmp/redisbloom-src
-cd /tmp
-git clone --branch "$LATEST_VERSION" https://github.com/RedisBloom/RedisBloom.git redisbloom-src
-cd redisbloom-src
-
+# Build module
+cd /tmp/redisbloom-src
 make
 
+# Install module
 install -m 644 bin/redisbloom.so "$MODULE_PATH"
 
+# Ensure config exists
 if [ ! -f "$MODULE_CONF" ]; then
     echo "loadmodule $MODULE_PATH" > "$MODULE_CONF"
 fi
 
+# Ensure redis.conf includes module
 if ! grep -q "redisbloom.conf" /etc/redis/redis.conf; then
     echo "include /etc/redis/modules/redisbloom.conf" >> /etc/redis/redis.conf
 fi
 
-# ✅ Yunohost‑compliant restart
+# Clean up build directory
+ynh_secure_remove --file="/tmp/redisbloom-src"
+
+# Restart Redis
 ynh_systemctl --service="redis-server" --action="restart"
 
-ynh_print_info "RedisBloom upgraded to latest version"
+ynh_print_info "RedisBloom upgraded successfully"
 
 #=================================================
 # COMPOSER
