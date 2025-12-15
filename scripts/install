@@ -44,6 +44,50 @@ redis_db=$(ynh_redis_get_free_db)
 ynh_app_setting_set --key=redis_db --value="$redis_db"
 
 #=================================================
+# INSTALL REDIS BLOOM MODULE
+#=================================================
+
+ynh_print_info "Installing RedisBloom module"
+
+arch="$(get_arch)"
+[ "$arch" != "unsupported" ] || ynh_die "Unsupported architecture"
+
+ynh_print_info "Detected architecture: $arch"
+
+version="$(get_latest_redisbloom_release)"
+[ -n "$version" ] || ynh_die "Unable to determine RedisBloom version"
+
+ynh_print_info "Latest RedisBloom version: $version"
+
+mkdir -p "$REDIS_MODULE_DIR"
+
+tmpdir="$(mktemp -d)"
+
+ynh_print_info "Downloading RedisBloom"
+curl -fsSL \
+  "https://github.com/RedisBloom/RedisBloom/releases/download/$version/redisbloom-$arch-$version.tar.gz" \
+  -o "$tmpdir/redisbloom.tar.gz" \
+  || ynh_die "Download failed"
+
+ynh_print_info "Extracting RedisBloom"
+tar xzf "$tmpdir/redisbloom.tar.gz" -C "$tmpdir"
+
+find "$tmpdir" -name "redisbloom.so" -exec cp {} "$REDISBLOOM_SO" \;
+chmod 644 "$REDISBLOOM_SO"
+
+if ! grep -q "redisbloom.so" "$REDIS_CONF"; then
+    ynh_print_info "Registering RedisBloom module in Redis configuration"
+    echo "loadmodule $REDISBLOOM_SO" >> "$REDIS_CONF"
+fi
+
+ynh_print_info "Restarting Redis"
+ynh_systemd_action --service_name=redis-server --action=restart
+
+ynh_secure_remove "$tmpdir"
+
+ynh_print_info "RedisBloom installation completed"
+
+#=================================================
 # COMPOSER
 #=================================================
 ynh_script_progression "Pulling in external libraries with Composer..."
