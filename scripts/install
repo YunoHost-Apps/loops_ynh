@@ -47,34 +47,36 @@ ynh_app_setting_set --key=redis_db --value="$redis_db"
 # INSTALL REDIS BLOOM MODULE
 #=================================================
 
-ynh_script_progression "Installing RedisBloom ${REDISBLOOM_VERSION} (global)"
+ynh_print_info "Installing RedisBloom (latest version)"
 
-mkdir -p "$REDIS_MODULE_DIR"
-tmpdir="$(mktemp -d)"
+LATEST_VERSION=$(get_latest_redisbloom_version)
+ynh_print_info "Latest RedisBloom version detected: $LATEST_VERSION"
 
-curl -fsSL \
-  "$REDISBLOOM_URL" \
-  -o "$tmpdir/redisbloom.tar.gz" \
-  || ynh_die "Failed to download RedisBloom"
+ynh_install_app_dependencies build-essential git make curl
 
-tar xzf "$tmpdir/redisbloom.tar.gz" -C "$tmpdir"
+mkdir -p /etc/redis/modules
 
-# RedisBloom releases sometimes nest the .so; find it robustly
-find "$tmpdir" -name "redisbloom.so" -type f -exec cp {} "$REDISBLOOM_SO" \;
+rm -rf /tmp/redisbloom-src
+cd /tmp
+git clone --branch "$LATEST_VERSION" https://github.com/RedisBloom/RedisBloom.git redisbloom-src
+cd redisbloom-src
 
-chmod 644 "$REDISBLOOM_SO"
+make
 
-if ! grep -q "redisbloom.so" "$REDIS_CONF"; then
-    ynh_print_info "Registering RedisBloom module globally"
-    echo "loadmodule $REDISBLOOM_SO" >> "$REDIS_CONF"
+install -m 644 bin/redisbloom.so /etc/redis/modules/redisbloom.so
+
+cat > /etc/redis/modules/redisbloom.conf <<EOF
+loadmodule /etc/redis/modules/redisbloom.so
+EOF
+
+if ! grep -q "redisbloom.conf" /etc/redis/redis.conf; then
+    echo "include /etc/redis/modules/redisbloom.conf" >> /etc/redis/redis.conf
 fi
 
-ynh_script_progression "Restarting Redis service"
-ynh_systemd_action --service_name=redis-server --action=restart
+# ✅ Yunohost‑compliant restart
+ynh_systemctl --service="redis-server" --action="restart"
 
-ynh_secure_remove "$tmpdir"
-
-ynh_print_info "RedisBloom ${REDISBLOOM_VERSION} installed globally"
+ynh_print_info "RedisBloom installed successfully"
 
 #=================================================
 # COMPOSER
