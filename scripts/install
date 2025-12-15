@@ -73,7 +73,9 @@ tmpdir="$(mktemp -d)"
 ynh_setup_source --source_id="redisbloom" --dest_dir="$tmpdir"
 
 # Build module
-make -C "$tmpdir"
+pushd "$tmpdir"
+    ynh_exec_as_app make
+popd
 
 # Install module
 mkdir -p /etc/redis/modules
