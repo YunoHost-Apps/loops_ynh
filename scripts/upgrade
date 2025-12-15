@@ -62,28 +62,44 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="storage"
 # CHECK FOR REDIS BLOOM MODULE AND INSTALL IF NOT THERE
 #=================================================
 
-ynh_script_progression "Reinstalling RedisBloom ${REDISBLOOM_VERSION} (global)"
+ynh_print_info "Upgrading RedisBloom module"
 
-mkdir -p "$REDIS_MODULE_DIR"
-tmpdir="$(mktemp -d)"
+MODULE_PATH="/etc/redis/modules/redisbloom.so"
+MODULE_CONF="/etc/redis/modules/redisbloom.conf"
 
-curl -fsSL \
-  "$REDISBLOOM_URL" \
-  -o "$tmpdir/redisbloom.tar.gz" \
-  || ynh_die "Failed to download RedisBloom"
+LATEST_VERSION=$(get_latest_redisbloom_version)
+ynh_print_info "Latest RedisBloom version detected: $LATEST_VERSION"
 
-tar xzf "$tmpdir/redisbloom.tar.gz" -C "$tmpdir"
+ynh_install_app_dependencies build-essential git make curl
 
-find "$tmpdir" -name "redisbloom.so" -type f -exec cp {} "$REDISBLOOM_SO" \;
+if [ -f "$MODULE_PATH" ]; then
+    ynh_print_info "RedisBloom already installed — updating to latest version"
+else
+    ynh_print_info "RedisBloom not installed — installing latest version"
+    mkdir -p /etc/redis/modules
+fi
 
-chmod 644 "$REDISBLOOM_SO"
+rm -rf /tmp/redisbloom-src
+cd /tmp
+git clone --branch "$LATEST_VERSION" https://github.com/RedisBloom/RedisBloom.git redisbloom-src
+cd redisbloom-src
 
-ynh_script_progression "Restarting Redis service"
-ynh_systemd_action --service_name=redis-server --action=restart
+make
 
-ynh_secure_remove "$tmpdir"
+install -m 644 bin/redisbloom.so "$MODULE_PATH"
 
-ynh_print_info "RedisBloom ${REDISBLOOM_VERSION} ensured globally"
+if [ ! -f "$MODULE_CONF" ]; then
+    echo "loadmodule $MODULE_PATH" > "$MODULE_CONF"
+fi
+
+if ! grep -q "redisbloom.conf" /etc/redis/redis.conf; then
+    echo "include /etc/redis/modules/redisbloom.conf" >> /etc/redis/redis.conf
+fi
+
+# ✅ Yunohost‑compliant restart
+ynh_systemctl --service="redis-server" --action="restart"
+
+ynh_print_info "RedisBloom upgraded to latest version"
 
 #=================================================
 # COMPOSER
