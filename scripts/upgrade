@@ -59,6 +59,47 @@ ynh_script_progression "Upgrading source files..."
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="storage"
 
 #=================================================
+# CHECK FOR REDIS BLOOM MODULE AND INSTALL IF NOT THERE
+#=================================================
+
+ynh_script_progression "Ensuring RedisBloom module is installed"
+
+redis_conf="$(ynh_redis_get_conf_path "$app")"
+
+arch="$(get_arch)"
+[ "$arch" != "unsupported" ] || ynh_die "Unsupported architecture"
+
+latest_version="$(get_latest_redisbloom_release)"
+[ -n "$latest_version" ] || ynh_die "Unable to determine RedisBloom version"
+
+mkdir -p "$REDIS_MODULE_DIR"
+tmpdir="$(mktemp -d)"
+
+ynh_exec_warn_less curl -fsSL \
+  "https://github.com/RedisBloom/RedisBloom/releases/download/$latest_version/redisbloom-$arch-$latest_version.tar.gz" \
+  -o "$tmpdir/redisbloom.tar.gz" \
+  || ynh_die "Failed to download RedisBloom"
+
+tar xzf "$tmpdir/redisbloom.tar.gz" -C "$tmpdir"
+
+find "$tmpdir" -name "redisbloom.so" -exec cp {} "$REDISBLOOM_SO" \;
+chmod 644 "$REDISBLOOM_SO"
+
+if ! grep -q "redisbloom.so" "$redis_conf"; then
+    ynh_script_progression "Registering RedisBloom module in Redis config"
+    echo "loadmodule $REDISBLOOM_SO" >> "$redis_conf"
+else
+    ynh_print_info "RedisBloom already registered — refreshing module binary"
+fi
+
+ynh_script_progression "Restarting app Redis instance"
+ynh_systemd_action --service_name="redis-server@$app" --action=restart
+
+ynh_secure_remove "$tmpdir"
+
+ynh_print_info "RedisBloom ensured for app $app"
+
+#=================================================
 # COMPOSER
 #=================================================
 ynh_script_progression "Pulling in external libraries with Composer..."
