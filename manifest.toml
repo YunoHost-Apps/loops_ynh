@@ -89,6 +89,11 @@ ram.runtime = "350M"
 
     [resources.sources]
 
+    [resources.sources.redisbloom]
+    url = "https://github.com/RedisBloom/RedisBloom/archive/refs/tags/v2.8.17.tar.gz"
+    sha256 = "b3bda37ae84d86d8dfcf8fd006595574924e2458cb61541d5068358f0ccb3763"
+    extract = true
+    
     [resources.sources.main]
     url = "https://github.com/joinloops/loops-server/archive/ce24c70ce013322fea95f2666903a114d4c01e0f.zip"
     sha256 = "4a03790dc0f1182e1bcd54e9a5085e95046b004ce86cb6c83079e69a8858d84c"
@@ -105,7 +110,7 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server, build-essential, make, curl"
 
     [resources.database]
     type = "mysql"
