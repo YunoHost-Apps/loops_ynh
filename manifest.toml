@@ -90,8 +90,8 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/8130c01bf793efd12d62146f2c70b4fb28d2b76e.zip"
-    sha256 = "df0c3cdd4c4bf7d3610d625842dc68ef7ea75be1d53d1756971745ce6b6c9efb"
+    url = "https://github.com/joinloops/loops-server/archive/ce24c70ce013322fea95f2666903a114d4c01e0f.zip"
+    sha256 = "4a03790dc0f1182e1bcd54e9a5085e95046b004ce86cb6c83079e69a8858d84c"
 
     [resources.system_user]
     allow_email = true
@@ -105,7 +105,7 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-stack-server"
 
     [resources.database]
     type = "mysql"
