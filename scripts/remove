@@ -32,18 +32,18 @@ ynh_safe_rm "/etc/cron.d/$app"
 
 # Remove Redis Bloom config
 
-ynh_script_progression "Removing RedisBloom module (global)"
+ynh_print_info "Removing RedisBloom module"
 
-if [ -f "$REDIS_CONF" ]; then
-    sed -i '\|redisbloom.so|d' "$REDIS_CONF"
-fi
+sed -i '/redisbloom.conf/d' /etc/redis/redis.conf || true
 
-ynh_secure_remove "$REDISBLOOM_SO"
+rm -f /etc/redis/modules/redisbloom.so
+rm -f /etc/redis/modules/redisbloom.conf
 
-ynh_script_progression "Restarting Redis service"
-ynh_systemd_action --service_name=redis-server --action=restart
+# ✅ Yunohost‑compliant restart
+ynh_systemctl --service="redis-server" --action="restart"
 
-ynh_print_info "RedisBloom removed globally"
+ynh_print_info "RedisBloom removed successfully"
+
 
 #=================================================
 # END OF SCRIPT
