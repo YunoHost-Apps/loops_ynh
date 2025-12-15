@@ -30,20 +30,22 @@ ynh_config_remove_phpfpm
 
 ynh_safe_rm "/etc/cron.d/$app"
 
+#==================================================
 # Remove Redis Bloom config
-
+#==================================================
 ynh_print_info "Removing RedisBloom module"
 
+# Remove include from redis.conf
 sed -i '/redisbloom.conf/d' /etc/redis/redis.conf || true
 
-rm -f /etc/redis/modules/redisbloom.so
-rm -f /etc/redis/modules/redisbloom.conf
+# Remove module files
+ynh_secure_remove --file="/etc/redis/modules/redisbloom.so"
+ynh_secure_remove --file="/etc/redis/modules/redisbloom.conf"
 
-# ✅ Yunohost‑compliant restart
+# Restart Redis
 ynh_systemctl --service="redis-server" --action="restart"
 
 ynh_print_info "RedisBloom removed successfully"
-
 
 #=================================================
 # END OF SCRIPT
