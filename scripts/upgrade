@@ -78,7 +78,7 @@ popd
 chown -R $app:www-data $install_dir
 
 #=================================================
-# CHECK FOR REDIS BLOOM MODULE AND INSTALL IF NOT THERE
+# FORCE UPDATE REDIS BLOOM MODULE AND INSTALL IF NOT THERE
 #=================================================
 
 ynh_print_info "Upgrading RedisBloom module"
@@ -87,7 +87,7 @@ MODULE_PATH="/etc/redis/modules/redisbloom.so"
 MODULE_CONF="/etc/redis/modules/redisbloom.conf"
 
 # Ensure module directory exists
-ynh_exec_as_app mkdir -p /etc/redis/modules
+mkdir -p /etc/redis/modules
 
 # Download and extract source
 
@@ -95,7 +95,9 @@ tmpdir="$(mktemp -d)"
 ynh_setup_source --source_id="redisbloom" --dest_dir="$tmpdir"
 
 # Build module
-make -C $tmpdir
+pushd "$tmpdir"
+    ynh_exec_as_app make
+popd
 
 # Install module
 install -m 644 $tmpdir/bin/redisbloom.so "$MODULE_PATH"
