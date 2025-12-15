@@ -30,6 +30,21 @@ ynh_config_remove_phpfpm
 
 ynh_safe_rm "/etc/cron.d/$app"
 
+# Remove Redis Bloom config
+
+if [ -f "$REDIS_CONF" ]; then
+    ynh_print_info "Cleaning Redis configuration"
+    sed -i '\|redisbloom.so|d' "$REDIS_CONF"
+fi
+
+if [ -f "$REDISBLOOM_SO" ]; then
+    ynh_print_info "Removing RedisBloom binary"
+    ynh_secure_remove "$REDISBLOOM_SO"
+fi
+
+ynh_print_info "Restarting Redis"
+ynh_systemd_action --service_name=redis-server --action=restart
+
 #=================================================
 # END OF SCRIPT
 #=================================================
