@@ -71,7 +71,7 @@ MODULE_CONF="/etc/redis/modules/redisbloom.conf"
 mkdir -p /etc/redis/modules
 
 # Download and extract source
-ynh_setup_source --source="redisbloom" --dest_dir="/tmp/redisbloom-src"
+ynh_setup_source --source_id="redisbloom" --dest_dir="/tmp/redisbloom-src"
 
 # Build module
 cd /tmp/redisbloom-src
