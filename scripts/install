@@ -50,7 +50,7 @@ ynh_app_setting_set --key=redis_db --value="$redis_db"
 ynh_print_info "Installing RedisBloom (latest version)"
 
 # Download and extract source using Yunohost helper
-ynh_setup_source --source="redisbloom" --dest_dir="/tmp/redisbloom-src"
+ynh_setup_source --source_id="redisbloom" --dest_dir="/tmp/redisbloom-src"
 
 # Build module
 cd /tmp/redisbloom-src
