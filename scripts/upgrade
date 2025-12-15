@@ -96,7 +96,7 @@ ynh_setup_source --source_id="redisbloom" --dest_dir="$tmpdir"
 
 # Build module
 pushd "$tmpdir"
-    ynh_exec_as_app make
+    make
 popd
 
 # Install module
