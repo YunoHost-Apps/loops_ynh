@@ -52,7 +52,7 @@ ynh_script_progression "Installing RedisBloom ${REDISBLOOM_VERSION} (global)"
 mkdir -p "$REDIS_MODULE_DIR"
 tmpdir="$(mktemp -d)"
 
-ynh_exec_warn_less curl -fsSL \
+curl -fsSL \
   "$REDISBLOOM_URL" \
   -o "$tmpdir/redisbloom.tar.gz" \
   || ynh_die "Failed to download RedisBloom"
