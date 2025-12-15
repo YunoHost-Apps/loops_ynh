@@ -92,7 +92,6 @@ ram.runtime = "350M"
     [resources.sources.redisbloom]
     url = "https://github.com/RedisBloom/RedisBloom/archive/refs/tags/v2.8.17.tar.gz"
     sha256 = "b3bda37ae84d86d8dfcf8fd006595574924e2458cb61541d5068358f0ccb3763"
-    extract = true
     
     [resources.sources.main]
     url = "https://github.com/joinloops/loops-server/archive/ce24c70ce013322fea95f2666903a114d4c01e0f.zip"
