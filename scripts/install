@@ -97,12 +97,13 @@ popd
 
 ynh_script_progression "Restarting Redis service"
 # Test module
-redis-server --loadmodule /etc/redis/modules/redisbloom.so --port 6380 --daemonize no
-
+ynh_print_info "Loading module..."
+redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
+ynh_print_info "Writing log"
 tail -n 50 /var/log/redis-server/redis-server.log
-
+ynh_print_info "Restart Redis server"
 ynh_systemctl --service=redis-server --action=restart
-
+ynh_print_info "Show module list"
 redis-cli MODULE LIST
 
 ynh_secure_remove "$tmpdir"
