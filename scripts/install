@@ -97,7 +97,7 @@ popd
 
 ynh_script_progression "Restarting Redis service"
 
-#redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
+redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
 
 ynh_systemctl --service=redis-server --action=restart
 
