@@ -103,12 +103,8 @@ redis_status=$?
 set -e
 
 if [ "$redis_status" -ne 0 ]; then
-    ynh_print_info "Redis failed to start. Showing last 100 log lines:"
-    if [ -f /var/log/redis-server/redis-server.log ]; then
-        tail -n 100 /var/log/redis-server/redis-server.log
-    else
-        ynh_print_info "Redis log file not found"
-    fi
+    ynh_print_info "Redis failed to start. Showing last 100 journal entries:"
+    journalctl -u redis-server --no-hostname --no-pager -n 100
     ynh_die "Redis restart failed"
 fi
 
