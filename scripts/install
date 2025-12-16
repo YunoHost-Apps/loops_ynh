@@ -97,24 +97,16 @@ pushd "$tmpdir"
 popd
 
 ynh_script_progression "Restarting Redis service"
+ynh_systemctl --service=redis-server --action=restart
 
-set +e
-redis-server /etc/redis/redis.conf
-redis_status=$?
-set -e
-
-if [ "$redis_status" -ne 0 ]; then
-    ynh_print_info "Redis failed to start. Showing last 100 journal entries:"
-    journalctl -u redis-server --no-hostname --no-pager -n 100
-    ynh_die "Redis restart failed"
-fi
-
-ynh_print_info "Show module list"
-redis-cli MODULE LIST
+modules=$(redis-cli MODULE LIST)
+ynh_print_info "Installed modules: $modules"
 
 ynh_safe_rm "$tmpdir"
 
 ynh_print_info "RedisBloom ${REDISBLOOM_VERSION} built and installed globally"
+
+ynh_die "Just for debugging"
 
 #=================================================
 # APP INITIAL CONFIGURATION
