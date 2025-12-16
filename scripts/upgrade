@@ -87,7 +87,7 @@ mkdir -p "$REDIS_MODULE_DIR"
 
 tmpdir="$(mktemp -d)"
 
-ynh_exec_warn_less git clone --recursive "$REDISBLOOM_REPO" "$tmpdir" || ynh_die "Failed to clone RedisBloom"
+git clone --recursive "$REDISBLOOM_REPO" "$tmpdir" || ynh_die "Failed to clone RedisBloom"
 
 pushd "$tmpdir"
     git checkout "$REDISBLOOM_VERSION"
