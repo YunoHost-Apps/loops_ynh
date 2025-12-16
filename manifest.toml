@@ -96,6 +96,7 @@ ram.runtime = "350M"
     [resources.sources.redisbloom]
     url = "https://github.com/RedisBloom/RedisBloom/archive/refs/tags/v2.8.17.tar.gz"
     sha256 = "b3bda37ae84d86d8dfcf8fd006595574924e2458cb61541d5068358f0ccb3763"
+    in_subdir = true
 
     [resources.system_user]
     allow_email = true
