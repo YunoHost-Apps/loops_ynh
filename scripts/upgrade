@@ -109,7 +109,7 @@ pushd "$tmpdir"
 popd
 
 ynh_script_progression "Restarting Redis service"
-ynh_systemctl --service_name=redis-server --action=restart
+ynh_systemctl --service=redis-server --action=restart
 
 ynh_secure_remove "$tmpdir"
 
