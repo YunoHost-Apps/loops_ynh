@@ -97,11 +97,25 @@ popd
 
 ynh_script_progression "Restarting Redis service"
 # Test module
-ynh_print_info "Loading module..."
-redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
-ynh_print_info "Writing log"
-tail -n 50 /var/log/redis-server/redis-server.log
-ynh_print_info "Restart Redis server"
+ynh_print_info "Start temporary Redis with Bloom for testing"
+redis-server --loadmodule /etc/redis/modules/redisbloom.so --port 6380 --daemonize yes
+
+ynh_print_info "Give it a second to start"
+sleep 2
+
+ynh_print_info "Verify module loaded"
+if redis-cli -p 6380 MODULE LIST | grep -q bf; then
+    echo "RedisBloom loaded successfully"
+else
+    echo "RedisBloom failed to load"
+    cat /var/log/redis-server/redis-server.log
+    exit 1
+fi
+
+ynh_print_info "Stop temporary server"
+redis-cli -p 6380 shutdown
+
+ynh_print_info "Restarting redis-server"
 ynh_systemctl --service=redis-server --action=restart
 ynh_print_info "Show module list"
 redis-cli MODULE LIST
