@@ -96,7 +96,7 @@ pushd "$tmpdir"
 popd
 
 ynh_script_progression "Restarting Redis service"
-ldd $REDIS_CONF
+ls -l "$REDIS_CONF"
 #redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
 
 ynh_systemctl --service=redis-server --action=restart
