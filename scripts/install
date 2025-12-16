@@ -81,7 +81,7 @@ pushd "$tmpdir"
     git submodule update --init --recursive
 
     ynh_script_progression "Building RedisBloom module"
-    make
+    make BUILD_TLS=no
 
     so_path="$(find . -name redisbloom.so | head -n1)"
     [ -f "$so_path" ] || ynh_die "RedisBloom build failed (module not found)"
@@ -98,7 +98,7 @@ popd
 ynh_script_progression "Restarting Redis service"
 
 set +e
-systemctl restart redis-server
+redis-server /etc/redis/redis.conf
 redis_status=$?
 set -e
 
