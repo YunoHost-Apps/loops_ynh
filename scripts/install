@@ -93,7 +93,7 @@ pushd "$tmpdir"
     fi
 popd
 
-ls -l "$REDISBLOOM_SO"
+ldd /etc/redis/modules/redisbloom.so
 
 if grep -Fq "loadmodule $REDISBLOOM_SO" /etc/redis/redis.conf; then
     echo "RedisBloom module is already loaded"
@@ -102,6 +102,9 @@ else
 fi
 
 ynh_script_progression "Restarting Redis service"
+
+redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
+
 ynh_systemctl --service=redis-server --action=restart
 
 ynh_secure_remove "$tmpdir"
