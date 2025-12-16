@@ -97,13 +97,20 @@ popd
 
 ynh_script_progression "Restarting Redis service"
 
-# Restart without aborting
-ynh_exec_warn_less systemctl restart redis-server
+set +e
+systemctl restart redis-server
+redis_status=$?
+set -e
 
-# Print log for debug
-ynh_script_progression "Redis log (last 50 lines)"
-[ -f /var/log/redis-server/redis-server.log ] && \
-    ynh_print_info "$(tail -n 50 /var/log/redis-server/redis-server.log)"
+if [ "$redis_status" -ne 0 ]; then
+    ynh_print_info "Redis failed to start. Showing last 100 log lines:"
+    if [ -f /var/log/redis-server/redis-server.log ]; then
+        tail -n 100 /var/log/redis-server/redis-server.log
+    else
+        ynh_print_info "Redis log file not found"
+    fi
+    ynh_die "Redis restart failed"
+fi
 
 ynh_print_info "Show module list"
 redis-cli MODULE LIST
