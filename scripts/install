@@ -96,8 +96,10 @@ pushd "$tmpdir"
 popd
 
 ynh_script_progression "Restarting Redis service"
-ls -l "$REDIS_CONF"
-#redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
+# Test module
+redis-server --loadmodule /etc/redis/modules/redisbloom.so --port 6380 --daemonize no
+
+tail -n 50 /var/log/redis-server/redis-server.log
 
 ynh_systemctl --service=redis-server --action=restart
 
