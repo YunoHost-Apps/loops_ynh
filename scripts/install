@@ -68,7 +68,7 @@ chown -R $app:www-data $install_dir
 
 ynh_script_progression "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
 
-ynh_systemctl --service=redis-server --action=restart
+ynh_systemctl --service=redis-cli --action=stop
 ynh_systemctl --service=redis-server --action=stop
 
 mkdir -p "$REDIS_MODULE_DIR"
@@ -77,13 +77,16 @@ tmpdir="$(mktemp -d)"
 
 git clone --recursive "$REDISBLOOM_REPO" "$tmpdir" || ynh_die "Failed to clone RedisBloom"
 
-pushd "$tmpdir"
-    git checkout "$REDISBLOOM_VERSION"
-    git submodule update --init --recursive
+pushd "$tmpdir/sbin/setup"
+#    git checkout "$REDISBLOOM_VERSION"
+#    git submodule update --init --recursive
 
     ynh_script_progression "Building RedisBloom module"
-    make BUILD_TLS=no
-
+    bash -l
+    make 
+    exit
+popd
+pushd "$tmpdir"
     so_path="$(find . -name redisbloom.so | head -n1)"
     [ -f "$so_path" ] || ynh_die "RedisBloom build failed (module not found)"
     
@@ -98,6 +101,7 @@ popd
 
 ynh_script_progression "Restarting Redis service"
 ynh_systemctl --service=redis-server --action=restart
+ynh_systemctl --service=redis-cli --action=restart
 
 modules=$(redis-cli MODULE LIST)
 ynh_print_info "Installed modules: $modules"
