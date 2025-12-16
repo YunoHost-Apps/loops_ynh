@@ -85,22 +85,23 @@ pushd "$tmpdir"
 
     so_path="$(find . -name redisbloom.so | head -n1)"
     [ -f "$so_path" ] || ynh_die "RedisBloom build failed (module not found)"
-    echo "Path to Redisbloom module: $so_path"
+    
     cp "$so_path" "$REDISBLOOM_SO"
-    chmod 644 "$REDISBLOOM_SO"
+    chmod 755 "$REDISBLOOM_SO"
 
     if ! grep -q "redisbloom.so" "$REDIS_CONF"; then
         ynh_print_info "Registering RedisBloom module globally"
         echo "loadmodule $REDISBLOOM_SO" >> "$REDIS_CONF"
     fi
 popd
-ls $tmpdir/bin/
 
 ynh_script_progression "Restarting Redis service"
 
-redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
+#redis-server --loadmodule /etc/redis/modules/redisbloom.so --daemonize no
 
 ynh_systemctl --service=redis-server --action=restart
+
+redis-cli MODULE LIST
 
 ynh_secure_remove "$tmpdir"
 
