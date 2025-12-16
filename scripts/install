@@ -63,6 +63,44 @@ popd
 chown -R $app:www-data $install_dir
 
 #=================================================
+# REDIS BLOOM MODULE INSTALL
+#=================================================
+
+ynh_script_progression "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
+
+mkdir -p "$REDIS_MODULE_DIR"
+
+tmpdir="$(mktemp -d)"
+
+ynh_exec_warn_less git clone --recursive "$REDISBLOOM_REPO" "$tmpdir" || ynh_die "Failed to clone RedisBloom"
+
+pushd "$tmpdir"
+    git checkout "$REDISBLOOM_VERSION"
+    git submodule update --init --recursive
+
+    ynh_script_progression "Building RedisBloom module"
+    make
+
+    so_path="$(find . -name redisbloom.so | head -n1)"
+    [ -f "$so_path" ] || ynh_die "RedisBloom build failed (module not found)"
+
+    cp "$so_path" "$REDISBLOOM_SO"
+    chmod 644 "$REDISBLOOM_SO"
+
+    if ! grep -q "redisbloom.so" "$REDIS_CONF"; then
+        ynh_print_info "Registering RedisBloom module globally"
+        echo "loadmodule $REDISBLOOM_SO" >> "$REDIS_CONF"
+    fi
+popd
+
+ynh_script_progression "Restarting Redis service"
+ynh_systemd_action --service_name=redis-server --action=restart
+
+ynh_secure_remove "$tmpdir"
+
+ynh_print_info "RedisBloom ${REDISBLOOM_VERSION} built and installed globally"
+
+#=================================================
 # APP INITIAL CONFIGURATION
 #=================================================
 ynh_script_progression "Adding $app's configuration files..."
