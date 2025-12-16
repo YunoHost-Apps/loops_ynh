@@ -111,7 +111,7 @@ fi
 ynh_print_info "Show module list"
 redis-cli MODULE LIST
 
-ynh_secure_remove "$tmpdir"
+ynh_safe_rm "$tmpdir"
 
 ynh_print_info "RedisBloom ${REDISBLOOM_VERSION} built and installed globally"
 
