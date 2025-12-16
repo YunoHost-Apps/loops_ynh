@@ -31,6 +31,23 @@ ynh_config_remove_phpfpm
 ynh_safe_rm "/etc/cron.d/$app"
 
 #=================================================
+# REMOVAL OF REDISBLOOM MODULE
+#=================================================
+
+ynh_script_progression "Removing RedisBloom module (global)"
+
+if [ -f "$REDIS_CONF" ]; then
+    sed -i '\|redisbloom.so|d' "$REDIS_CONF"
+fi
+
+ynh_secure_remove "$REDISBLOOM_SO"
+
+ynh_script_progression "Restarting Redis service"
+ynh_systemd_action --service_name=redis-server --action=restart
+
+ynh_print_info "RedisBloom removed globally"
+
+#=================================================
 # END OF SCRIPT
 #=================================================
 
