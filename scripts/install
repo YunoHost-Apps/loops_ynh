@@ -68,6 +68,7 @@ chown -R $app:www-data $install_dir
 
 ynh_script_progression "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
 
+ynh_systemctl --service=redis-server --action=restart
 ynh_systemctl --service=redis-server --action=stop
 
 mkdir -p "$REDIS_MODULE_DIR"
