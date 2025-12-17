@@ -7,7 +7,7 @@ name = "Loops"
 description.en = "Federated short video sharing platform"
 description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
-version = "1.0.0-beta.6~ynh1"
+version = "1.0.0-beta.6~ynh3"
 
 maintainers = ["Papa Dragon", "grossermensch"]
 
@@ -93,6 +93,10 @@ ram.runtime = "350M"
     url = "https://github.com/joinloops/loops-server/archive/2259418195a5a750233867139fbdc1d2d8c99e92.zip"
     sha256 = "3c32d7199c0248aabe08dd523b59a5b3cc7cfba8c33afd043495e2c3be46d133"
 
+    [resources.sources.redisbloom]
+    url = "https://s3.amazonaws.com/redismodules/redisbloom/redisbloom.Linux-ubuntu22.04-x86_64.2.6.16.zip"
+    sha256 = "654344e013f43dd9662aa0e2f61d38f1daeeac2c6bfed49593d525cc3488c769"
+
     [resources.system_user]
     allow_email = true
 
@@ -105,7 +109,7 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server, wget, make, pkg-config, build-essential, cmake"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server"
 
     [resources.database]
     type = "mysql"
