@@ -60,7 +60,19 @@ ynh_install_redisbloom() {
  fi
 
  ynh_print_info "Restarting Redis service"
- ynh_systemctl --service=redis-server --action=restart
+ set +e
+ ynh_systemd_action --service_name=redis-server --action=restart
+ redis_status=$?
+ set -e
+
+ ynh_print_info "==== Redis log (last 100 lines) ===="
+
+ if [ -f /var/log/redis-server/redis-server.log ]; then
+    tail -n 100 /var/log/redis-server/redis-server.log || true
+ else
+    ynh_print_info "Redis log file not found, showing journal instead"
+    journalctl -u redis-server --no-pager -n 100 || true
+ fi
 
  ynh_safe_rm "$tmpdir"
 
