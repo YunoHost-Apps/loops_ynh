@@ -53,7 +53,7 @@ ynh_install_redisbloom() {
 
  pushd "$tmpdir"
     ynh_print_info "Fix incompatibility issue between RedisBloom and Redis-Server 7"
-    ynh_replace --match="REDISMODULE_CONFIG_UNPREFIXED" --replace="REDISMODULE_CONFIG_NONE" --file=src/config.c
+    ynh_replace --match="const char *default_val = RedisModule_StringPtrLen(rm_config.config.str_value, NULL);" --replace="const char *default_val = NULL;" --file=src/config.c
 
     ynh_print_info "Building RedisBloom module"
     make
