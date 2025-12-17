@@ -96,6 +96,7 @@ ram.runtime = "350M"
     [resources.sources.redisbloom]
     url = "https://s3.amazonaws.com/redismodules/redisbloom/redisbloom.Linux-ubuntu22.04-x86_64.2.6.16.zip"
     sha256 = "654344e013f43dd9662aa0e2f61d38f1daeeac2c6bfed49593d525cc3488c769"
+    in_subdir = false
 
     [resources.system_user]
     allow_email = true
