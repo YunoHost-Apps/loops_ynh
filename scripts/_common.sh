@@ -41,7 +41,7 @@ ynh_install_redisbloom() {
     return 0
  fi
 
- ynh_print_info "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
+ ynh_print_info "Getting RedisBloom to work"
 
  ynh_systemctl --service=redis-server --action=stop
 
@@ -49,36 +49,22 @@ ynh_install_redisbloom() {
 
  tmpdir="$(mktemp -d)"
 
- ynh_hide_warnings git clone --recursive "$REDISBLOOM_REPO" "$tmpdir" || ynh_die "Failed to clone RedisBloom"
+ ynh_setup_source --dest_dir="$tmpdir" --source_id="redisbloom" || ynh_die "Failed to clone RedisBloom"
 
- pushd "$tmpdir"
-    ynh_print_info "Fix incompatibility issue between RedisBloom and Redis-Server 7"
-    ynh_replace --match="RedisModule_StringPtrLen(rm_config.config.str_value, NULL)" --replace="NULL" --file=src/config.c
+ cp "$tmpdir/redisbloom.so" "$REDISBLOOM_SO"
+ chmod 755 "$REDISBLOOM_SO"
 
-    ynh_print_info "Building RedisBloom module"
-    make
-
-    so_path="$(find . -name redisbloom.so | head -n1)"
-    [ -f "$so_path" ] || ynh_die "RedisBloom build failed (module not found)"
-    
-    cp "$so_path" "$REDISBLOOM_SO"
-    chmod 755 "$REDISBLOOM_SO"
-
-    if ! grep -q "redisbloom.so" "$REDIS_CONF"; then
-        ynh_print_info "Registering RedisBloom module globally"
-        echo "loadmodule $REDISBLOOM_SO" >> "$REDIS_CONF"
-    fi
- popd
+ if ! grep -q "redisbloom.so" "$REDIS_CONF"; then
+    ynh_print_info "Registering RedisBloom module globally"
+    echo "loadmodule $REDISBLOOM_SO" >> "$REDIS_CONF"
+ fi
 
  ynh_print_info "Restarting Redis service"
- ynh_systemctl --service=redis-server --action=start
-
- modules=$(redis-cli MODULE LIST)
- ynh_print_info "Installed modules: $modules"
+ ynh_systemctl --service=redis-server --action=restart
 
  ynh_safe_rm "$tmpdir"
 
- ynh_print_info "RedisBloom ${REDISBLOOM_VERSION} built and installed globally"
+ ynh_print_info "RedisBloom built and installed globally"
 
- ynh_die "Just for debugging"
+ ynh_die "Just for debugging purposes"
 }
