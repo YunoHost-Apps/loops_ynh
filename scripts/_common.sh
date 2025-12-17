@@ -41,7 +41,7 @@ ynh_install_redisbloom() {
     return 0
  fi
 
- ynh_script_progression "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
+ ynh_print_info "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
 
  ynh_systemctl --service=redis-server --action=stop
 
@@ -55,7 +55,7 @@ ynh_install_redisbloom() {
     ynh_print_info "Fix incompatibility issue between RedisBloom and Redis-Server 7"
     sed -i 's/REDISMODULE_CONFIG_UNPREFIXED/REDISMODULE_CONFIG_NONE/' src/config.c
 
-    ynh_script_progression "Building RedisBloom module"
+    ynh_print_info "Building RedisBloom module"
     make
 
     so_path="$(find . -name redisbloom.so | head -n1)"
@@ -70,7 +70,7 @@ ynh_install_redisbloom() {
     fi
  popd
 
- ynh_script_progression "Restarting Redis service"
+ ynh_print_info "Restarting Redis service"
  ynh_systemctl --service=redis-server --action=start
 
  modules=$(redis-cli MODULE LIST)
