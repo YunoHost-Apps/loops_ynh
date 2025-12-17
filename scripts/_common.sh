@@ -20,7 +20,7 @@ ynh_get_yunohost_major_version() {
 
 ynh_install_redisbloom() {
  # Check for yunohost version, only major 12 and lower need the redisbloom patch. Version 13 (Trixie) comes with redis-stack installed
- local ynh_major = "$(ynh_get_yunohost_major_version)"
+ yunhost_version = "$(ynh_get_yunohost_major_version)"
 
  if [ "$ynh_major" -ge 13 ]; then
     ynh_print_info "YunoHost ${ynh_major} detected — skipping RedisBloom install"
@@ -53,7 +53,7 @@ ynh_install_redisbloom() {
 
  pushd "$tmpdir"
     ynh_print_info "Fix incompatibility issue between RedisBloom and Redis-Server 7"
-    sed -i 's/REDISMODULE_CONFIG_UNPREFIXED/REDISMODULE_CONFIG_NONE/' src/config.c
+    ynh_replace --match="REDISMODULE_CONFIG_UNPREFIXED" --replace="REDISMODULE_CONFIG_NONE" --file=src/config.c
 
     ynh_print_info "Building RedisBloom module"
     make
