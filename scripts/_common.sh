@@ -7,16 +7,39 @@
 timezone=$(timedatectl show --value --property=Timezone)
 
 #=================================================
+# YUNOHOST VERSION HELPERS
+#=================================================
+
+ynh_get_yunohost_major_version() {
+    yunohost --version | awk '{print $3}' | cut -d. -f1
+}
+
+#=================================================
 # REDIS BLOOM INSTALLER
 #=================================================
 
 ynh_install_redisbloom() {
+ # Check for yunohost version, only major 12 and lower need the redisbloom patch. Version 13 (Trixie) comes with redis-stack installed
+ local ynh_major = "$(ynh_get_yunohost_major_version)"
+
+ if [ "$ynh_major" -ge 13 ]; then
+    ynh_print_info "YunoHost ${ynh_major} detected — skipping RedisBloom install"
+    return 0
+ fi
  REDIS_MODULE_DIR="/etc/redis/modules"
  REDISBLOOM_SO="$REDIS_MODULE_DIR/redisbloom.so"
  REDIS_CONF="/etc/redis/redis.conf"
 
  REDISBLOOM_VERSION="v2.8.17"
  REDISBLOOM_REPO="https://github.com/RedisBloom/RedisBloom.git"
+
+ #-------------------------------------------------
+ # Skip if already installed and registered
+ #-------------------------------------------------
+ if [ -f "$REDISBLOOM_SO" ] && grep -q '^loadmodule .*redisbloom\.so' "$REDIS_CONF"; then
+    ynh_print_info "RedisBloom already installed, skipping rebuild"
+    return 0
+ fi
 
  ynh_script_progression "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
 
@@ -29,7 +52,7 @@ ynh_install_redisbloom() {
  ynh_hide_warnings git clone --recursive "$REDISBLOOM_REPO" "$tmpdir" || ynh_die "Failed to clone RedisBloom"
 
  pushd "$tmpdir"
-    #Fix incompatibility issue between RedisBloom and Redis-Server 7
+    ynh_print_info "Fix incompatibility issue between RedisBloom and Redis-Server 7"
     sed -i 's/REDISMODULE_CONFIG_UNPREFIXED/REDISMODULE_CONFIG_NONE/' src/config.c
 
     ynh_script_progression "Building RedisBloom module"
