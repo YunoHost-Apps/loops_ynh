@@ -81,7 +81,7 @@ chown -R $app:www-data $install_dir
 # REDIS BLOOM MODULE INSTALL
 #=================================================
 
-ynh_script_progression "Cloning RedisBloom ${REDISBLOOM_VERSION} with submodules"
+ynh_script_progression "Installing RedisBloom with submodules"
 
 ynh_install_redisbloom
 
