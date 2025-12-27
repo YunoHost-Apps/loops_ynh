@@ -7,7 +7,7 @@ name = "Loops"
 description.en = "Federated short video sharing platform"
 description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
-version = "1.0.0-beta6~ynh7"
+version = "1.0.0-beta.6~ynh7"
 
 maintainers = ["Papa Dragon", "grossermensch"]
 
