@@ -11,7 +11,11 @@ timezone=$(timedatectl show --value --property=Timezone)
 #=================================================
 
 redisbloom_check_for_install() {
-
+  if redis-cli MODULE LIST 2>/dev/null | grep -q '"bf"'; then
+    ynh_print_info "RedisBloom module already installed. Skipping installation"
+  else
+    redisbloom_installer
+  fi
 }
 
 redisbloom_installer() {
@@ -48,7 +52,7 @@ redisbloom_installer() {
         # Install module
         ynh_print_info "Installing module into /etc/redis/modules/"
         mkdir -p /etc/redis/modules
-        cp "$SOFILE" /etc/redis/modules/
+        cp "$SOFILE" /etc/redis/modules/redisbloom.so
 
     popd
 
