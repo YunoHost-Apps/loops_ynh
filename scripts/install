@@ -76,6 +76,7 @@ chmod 600 "$install_dir/.env"
 #=================================================
 if yunohost_is_version_13; then
     ynh_print_info "YunoHost 13 detected. Checking for RedisBloom."
+    redisbloom_check_for_install
 else
     ynh_print_info "YunoHost < 13 detected. Skipping RedisBloom installation."
 fi
