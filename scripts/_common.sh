@@ -7,10 +7,9 @@
 timezone=$(timedatectl show --value --property=Timezone)
 
 yunohost_is_version_13() {
-  local version 
-  version="$(yunohost --version 2>/dev/null | awk '/^ version:/ {print $2; exit}')" # Get version number 
-  ynh_print_info "Installed version of Yunohost: $version"
-  if echo "$version" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
+  yunohost_version="$(yunohost --version 2>/dev/null | awk '/^ version:/ {print $2; exit}')" # Get version number 
+  ynh_print_info "Installed version of Yunohost: $yunohost_version"
+  if echo "$yunohost_version" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
     return 0 # Yes, it's YunoHost 13.x 
   fi 
   return 1 # No, it's not
