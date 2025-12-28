@@ -10,8 +10,7 @@ version_control() {
   which_version=$(yunohost --version) # Get version number 
   ynh_print_info "Installed version of Yunohost: $which_version"
   yunoversion=$(echo "$which_version" | awk '/^yunohost:/{found=1} found && /version:/{print $2; exit}')
-  ynh_die "Yunohost version: $yunoversion"
-  if echo "$which_version" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
+  if echo "$yunoversion" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
     return 0 # Yes, it's YunoHost 13.x 
   fi 
   return 1 # No, it's not
