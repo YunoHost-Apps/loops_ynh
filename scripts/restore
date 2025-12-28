@@ -62,7 +62,7 @@ ynh_restore "/var/log/$app/"
 #=================================================
 # CHECK FOR REDISBLOOM INSTALL 
 #=================================================
-if yunohost_is_version_13; then
+if version_control; then
     ynh_print_info "YunoHost 13 detected. Checking for RedisBloom."
     redisbloom_check_for_install
 else
