@@ -6,10 +6,10 @@
 
 timezone=$(timedatectl show --value --property=Timezone)
 
-yunohost_is_version_13() {
-  yunohost_version="$(yunohost --version 2>/dev/null | awk '/^ version:/ {print $2; exit}')" # Get version number 
-  ynh_print_info "Installed version of Yunohost: $yunohost_version"
-  if echo "$yunohost_version" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
+version_control() {
+  which_version="$(yunohost --version 2>/dev/null | awk '/^ version:/ {print $2; exit}')" # Get version number 
+  ynh_print_info "Installed version of Yunohost: $which_version"
+  if echo "$which_version" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
     return 0 # Yes, it's YunoHost 13.x 
   fi 
   return 1 # No, it's not
@@ -67,7 +67,7 @@ redisbloom_installer() {
     # Fix permissions (Redis 8.0 requires +x)
     chmod +x /etc/redis/modules/redisbloom.so
     chmod 755 /etc/redis/modules/redisbloom.so
-    chown redis:redis /etc/redis/modules/redisbloom.so 2>/dev/null || true
+    chown redis:redis /etc/redis/modules/redisbloom.so
 
     # Add loadmodule line to redis.conf if not already present
     if ! grep -q "^[[:space:]]*loadmodule /etc/redis/modules/redisbloom.so" /etc/redis/redis.conf; then
