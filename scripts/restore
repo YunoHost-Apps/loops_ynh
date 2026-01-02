@@ -60,6 +60,16 @@ ynh_restore "/etc/cron.d/$app"
 ynh_restore "/var/log/$app/"
 
 #=================================================
+# CHECK FOR REDISBLOOM INSTALL 
+#=================================================
+if version_control; then
+    ynh_print_info "YunoHost 13 detected. Checking for RedisBloom."
+    redisbloom_check_for_install
+else
+    ynh_print_info "YunoHost < 13 detected. Skipping RedisBloom installation."
+fi
+
+#=================================================
 # RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
