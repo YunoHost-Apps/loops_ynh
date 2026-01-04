@@ -40,9 +40,14 @@ redisbloom_installer() {
     TMPDIR=$(mktemp -d)
 
     # Clone RedisBloom 8.0 branch
-    git clone --recursive --branch 8.0 https://github.com/redisbloom/redisbloom "$TMPDIR"
+    #git clone --recursive --branch 8.0 https://github.com/redisbloom/redisbloom "$TMPDIR"
 
-    pushd "$TMPDIR/redisbloom"
+    ynh_setup_source --dest_dir="$TMPDIR" --source_id="RedisBloom"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/RedisModulesSDK" --source_id="RedisSDK"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/readies" --source_id="RedisReadies"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c" --source_id="RedisTDigestC"
+    
+    pushd "$TMPDIR"
 
         # Build the module
         ynh_print_info "Building RedisBloom…"
@@ -66,9 +71,9 @@ redisbloom_installer() {
     popd
 
     # Fix permissions (Redis 8.0 requires +x)
-    chmod +x /etc/redis/modules/redisbloom.so
     chmod 755 /etc/redis/modules/redisbloom.so
     chown redis:redis /etc/redis/modules/redisbloom.so
+    chmod +x /etc/redis/modules/redisbloom.so
 
     # Add loadmodule line to redis.conf if not already present
     if ! grep -q "^[[:space:]]*loadmodule /etc/redis/modules/redisbloom.so" /etc/redis/redis.conf; then
