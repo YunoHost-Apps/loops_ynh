@@ -13,7 +13,7 @@ version_control() {
   if echo "$yunoversion" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
     return 0 # Yes, it's YunoHost 13.x --> 0
   fi 
-  return 0 # No, it's not --> 1
+  return 1 # No, it's not --> 1
 }
 #=================================================
 # REDISBLOOM INSTALLER
