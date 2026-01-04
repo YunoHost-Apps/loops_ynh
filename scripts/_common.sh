@@ -33,9 +33,6 @@ redisbloom_installer() {
     # Stop Redis before modifying modules
     ynh_systemctl --service=redis --action=stop
 
-    # Ensure dependencies
-    ynh_install_app_dependencies python3-pip build-essential cmake tree
-
     # Create a temporary working directory
     TMPDIR=$(mktemp -d)
 
