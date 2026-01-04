@@ -39,14 +39,11 @@ redisbloom_installer() {
     # Create a temporary working directory
     TMPDIR=$(mktemp -d)
 
-    # Clone RedisBloom 8.0 branch
-    #git clone --recursive --branch 8.0 https://github.com/redisbloom/redisbloom "$TMPDIR"
-
-    ynh_setup_source --dest_dir="$TMPDIR" --source_id="RedisBloom"
-    ynh_setup_source --dest_dir="$TMPDIR/deps/RedisModulesSDK" --source_id="RedisSDK"
-    ynh_setup_source --dest_dir="$TMPDIR/deps/readies" --source_id="RedisReadies"
-    ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c" --source_id="RedisTDigestC"
-    ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c/tests/vendor/google/benchmark" --source_id="GoogleBenchmark"
+    ynh_setup_source --dest_dir="$TMPDIR" --source_id="redisbloom"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/RedisModulesSDK" --source_id="redissdk"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/readies" --source_id="redisreadies"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c" --source_id="redistdigestc"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c/tests/vendor/google/benchmark" --source_id="googlebenchmark"
     
     pushd "$TMPDIR"
 
