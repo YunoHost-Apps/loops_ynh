@@ -11,7 +11,7 @@ version_control() {
   ynh_print_info "Installed version of Yunohost: $which_version"
   yunoversion=$(echo "$which_version" | awk '/^yunohost:/{found=1} found && /version:/{print $2; exit}')
   if echo "$yunoversion" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
-    return 0 # Yes, it's YunoHost 13.x 
+    return 1 # Yes, it's YunoHost 13.x 
   fi 
   return 1 # No, it's not
 }
@@ -34,7 +34,7 @@ redisbloom_installer() {
     ynh_systemd_action --service_name=redis --action=stop
 
     # Ensure dependencies
-    ynh_install_app_dependencies python3-pip build-essential cmake
+    ynh_install_app_dependencies python3-pip build-essential cmake tree
 
     # Create a temporary working directory
     TMPDIR=$(mktemp -d)
@@ -46,12 +46,16 @@ redisbloom_installer() {
     ynh_setup_source --dest_dir="$TMPDIR/deps/RedisModulesSDK" --source_id="RedisSDK"
     ynh_setup_source --dest_dir="$TMPDIR/deps/readies" --source_id="RedisReadies"
     ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c" --source_id="RedisTDigestC"
+    ynh_setup_source --dest_dir="$TMPDIR/deps/t-digest-c/tests/vendor/google/benchmark" --source_id="GoogleBenchmark"
     
     pushd "$TMPDIR"
 
         # Build the module
         ynh_print_info "Building RedisBloom…"
+        tree
         make
+        popd
+        ynh_secure_remove --file="$TMPDIR"
 
         # Detect the compiled .so file (architecture‑independent)
         SOFILE="$(find bin -name redisbloom.so | head -n 1)"
