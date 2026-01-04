@@ -31,7 +31,7 @@ redisbloom_installer() {
     ynh_print_info "Installing RedisBloom module for Redis 8.0"
 
     # Stop Redis before modifying modules
-    ynh_systemd_action --service_name=redis --action=stop
+    ynh_systemctl --service=redis --action=stop
 
     # Ensure dependencies
     ynh_install_app_dependencies python3-pip build-essential cmake tree
