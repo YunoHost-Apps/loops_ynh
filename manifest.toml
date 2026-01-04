@@ -113,6 +113,11 @@ ram.runtime = "350M"
     sha256 = "a2487480d97aa7d64334fc60296c6e31cc530035c550148d52f77bc82ff12b63"
     in_subdir = true
 
+    [resources.sources.GoogleBenchmark]
+    url = "https://github.com/google/benchmark/archive/37be1e8252527229cccad9f097afe68572f3c08a.zip"
+    sha256 = "0912168e55d28958fa6b2cf78110d89816d444a185b57f6c2314d7bd8d9ced03"
+    in_subdir = true
+
     [resources.system_user]
     allow_email = true
 
