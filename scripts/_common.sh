@@ -46,10 +46,7 @@ redisbloom_installer() {
 
         # Build the module
         ynh_print_info "Building RedisBloom…"
-        tree
         make
-        popd
-        ynh_secure_remove --file="$TMPDIR"
 
         # Detect the compiled .so file (architecture‑independent)
         SOFILE="$(find bin -name redisbloom.so | head -n 1)"
@@ -57,7 +54,7 @@ redisbloom_installer() {
         # Fail‑safe: abort if not found
         if [[ -z "$SOFILE" ]]; then
             popd
-            ynh_secure_remove --file="$TMPDIR"
+            ynh_safe_rm "$TMPDIR"
             ynh_die "RedisBloom build failed. ERROR: redisbloom.so not found after build. Aborting installation."
         fi
 
@@ -82,10 +79,10 @@ redisbloom_installer() {
     fi
 
     # Cleanup
-    ynh_secure_remove --file="$TMPDIR"
+    ynh_safe_rm "$TMPDIR"
 
     # Restart Redis
-    ynh_systemd_action --service_name=redis --action=restart
+    ynh_systemctl --service=redis --action=restart
 
     ynh_print_info "RedisBloom installation completed successfully."
 }
