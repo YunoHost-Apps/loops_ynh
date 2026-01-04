@@ -93,6 +93,10 @@ ram.runtime = "350M"
     url = "https://github.com/joinloops/loops-server/archive/53e2465d0fd49532072e7d8c336777c89be230a7.zip"
     sha256 = "35c64f019f642c2810da38283dac6b75b960f803e06e1ebc95da0b77b913ab3f"
 
+    [resources.sources.RedisSDK]
+    url = "https://github.com/RedisLabsModules/RedisModulesSDK/archive/3b2f6840faf22e8c0b0cc7d63cb5f048ce467b8e.zip
+    sha256 = "8302df285de35c6154084b93cda665a8332f5dfd3b0e88124952fa5c8e7fc919"
+
     [resources.system_user]
     allow_email = true
 
