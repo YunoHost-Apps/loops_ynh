@@ -72,6 +72,16 @@ ynh_config_add --template=".env" --destination="$install_dir/.env"
 chmod 600 "$install_dir/.env"
 
 #=================================================
+# CHECK FOR REDISBLOOM INSTALL 
+#=================================================
+if version_control; then
+    ynh_print_info "YunoHost 13 detected. Checking for RedisBloom."
+    redisbloom_check_for_install
+else
+    ynh_print_info "YunoHost < 13 detected. Skipping RedisBloom installation."
+fi
+
+#=================================================
 # MAIL CONFIGURATION
 #=================================================
 ynh_app_setting_set_default --key=mail_mailer --value="$(ynh_read_var_in_file --file=$install_dir/.env --key=MAIL_MAILER)"
