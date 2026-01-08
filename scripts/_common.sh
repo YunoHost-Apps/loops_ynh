@@ -27,6 +27,8 @@ redisbloom_check_for_install() {
   elif [[ "$redis_version" =~ ^8\.0\.[0-9]+$ ]]; then
     ynh_print_info "Redis Server Version $redis_version detected. RedisBloom module installation starting."
     redisbloom_installer
+  else
+    ynh_print_info "Wrong Redis Server Version $redis_version detected. Please check the RedisBloom github to install the module for your Redis Version."
   fi
 }
 
