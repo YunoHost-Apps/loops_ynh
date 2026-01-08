@@ -20,9 +20,12 @@ version_control() {
 #=================================================
 
 redisbloom_check_for_install() {
-  if redis-cli MODULE LIST 2>/dev/null | grep -q '"bf"'; then
+  check_bfmodule="$(redis-cli MODULE LIST)"
+  redis_version="$(redis-server --version | sed -n 's/.*v=\([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p')"
+  if $check_bfmodule | grep -qx "bf"; then
     ynh_print_info "RedisBloom module already installed. Skipping installation"
-  else
+  elif [[ "$redis_version" =~ ^8\.0\.[0-9]+$ ]]; then
+    ynh_print_info "Redis Server Version $redis_version detected. RedisBloom module installation starting."
     redisbloom_installer
   fi
 }
