@@ -8,7 +8,7 @@ timezone=$(timedatectl show --value --property=Timezone)
 
 version_control() {
   which_version=$(yunohost --version) # Get version number 
-  ynh_print_info "Installed version of Yunohost: $which_version"
+  # ynh_print_info "Installed version of Yunohost: $which_version"
   yunoversion=$(echo "$which_version" | awk '/^yunohost:/{found=1} found && /version:/{print $2; exit}')
   if echo "$yunoversion" | grep -q "^13\."; then # Check if Version 13 is installed (required for redisbloom module is Redis 8.0)
     return 0 # Yes, it's YunoHost 13.x --> 0
