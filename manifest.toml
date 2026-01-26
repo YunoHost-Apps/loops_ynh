@@ -7,7 +7,7 @@ name = "Loops"
 description.en = "Federated short video sharing platform"
 description.fr = "Plateforme fédérée de partage de vidéos courtes"
 
-version = "1.0.0-beta.8~ynh2"
+version = "1.0.0-beta.8~ynh3"
 
 maintainers = ["Papa Dragon", "grossermensch"]
 
@@ -90,7 +90,7 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/cc191899f5d9930cfff539774deb265467626f29.zip"
+    url = "https://github.com/joinloops/loops-server/archive/af456581596798c1544a46166dbdb3a76d3e108f.zip"
     sha256 = "2ecbd3632375590e24f3b2dd56318902d32986bfad69c22f218397c829ba2356"
 
     [resources.sources.redisbloom]
