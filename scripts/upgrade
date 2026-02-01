@@ -56,7 +56,7 @@ ynh_app_setting_set_default --key=s3_path_style_string --value=$s3_path_style_st
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="storage"
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="storage .env"
 
 #=================================================
 # COMPOSER
