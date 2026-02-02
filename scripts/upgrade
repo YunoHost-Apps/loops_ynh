@@ -56,7 +56,7 @@ ynh_app_setting_set_default --key=s3_path_style_string --value=$s3_path_style_st
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="storage .env"
+ynh_setup_source --dest_dir="$install_dir" --keep=".env"
 
 #=================================================
 # COMPOSER
@@ -78,16 +78,6 @@ popd
 chown -R $app:www-data $install_dir
 
 #=================================================
-# APP CONFIGURATION
-#=================================================
-ynh_script_progression "Adding $app's configuration files..."
-
-ynh_config_add --template=".env" --destination="$install_dir/.env"
-ynh_write_var_in_file --file=$install_dir/.env --key=APP_KEY --value="$(ynh_app_setting_get --key=app_key)"
-
-chmod 600 "$install_dir/.env"
-
-#=================================================
 # CHECK FOR REDISBLOOM INSTALL 
 #=================================================
 if version_control; then
@@ -95,30 +85,6 @@ if version_control; then
     redisbloom_check_for_install
 else
     ynh_print_info "YunoHost < 13 detected. Skipping RedisBloom installation."
-fi
-
-#=================================================
-# MAIL CONFIGURATION
-#=================================================
-ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_MAILER --value="$(ynh_app_setting_get --key=mail_mailer)"
-if [[ $(ynh_app_setting_get --key=mail_mailer) == "smtp" ]]
-then
-    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_HOST --value="$(ynh_app_setting_get --key=smtp_host)"
-    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_PORT --value="$(ynh_app_setting_get --key=smtp_port)"
-    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_USERNAME --value="$(ynh_app_setting_get --key=smtp_username)"
-    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_PASSWORD --value="$(ynh_app_setting_get --key=smtp_password)"
-    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_ENCRYPTION --value="$(ynh_app_setting_get --key=smtp_encryption)"
-    ynh_write_var_in_file --file=$install_dir/.env --key=MAIL_FROM_ADDRESS --value="$(ynh_app_setting_get --key=smtp_from)"
-elif [[ $(ynh_app_setting_get --key=mail_mailer) == "mailgun" ]]
-then
-    ynh_hide_warnings ynh_exec_as_app sed -i "59 a$mailgun_secret" $install_dir/.env
-    ynh_hide_warnings ynh_exec_as_app sed -i "59 a$mailgun_domain" $install_dir/.env
-elif [[ $(ynh_app_setting_get --key=mail_mailer) == "postmark" ]]
-then
-    ynh_hide_warnings ynh_exec_as_app sed -i "59 a$postmark_token" $install_dir/.env
-elif [[ $(ynh_app_setting_get --key=mail_mailer) == "resend" ]]
-then
-    ynh_hide_warnings ynh_exec_as_app sed -i "59 a$resend_key" $install_dir/.env
 fi
 
 #=================================================
@@ -138,14 +104,9 @@ ynh_script_progression "Clearing and rebuilding caches..."
 pushd "$install_dir"
     $artisan queue:restart
     # Clear caches
-    $artisan cache:clear
-    $artisan config:clear
-    $artisan view:clear
     $artisan optimize:clear
     # Rebuild caches
-    $artisan config:cache
-    $artisan route:cache
-    $artisan view:cache
+    $artisan optimize
 popd
 
 # Generate Passport Keys
