@@ -90,8 +90,8 @@ ram.runtime = "350M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/joinloops/loops-server/archive/5c672aef38da46c11882b3ac51a600c16f8a377c.zip"
-    sha256 = "39357e8612baafbc306bb4b6944c05238cbae37933a08c8dbc8cf4e396950a39"
+    url = "https://github.com/joinloops/loops-server/archive/52ca7e03ce6416b0cba57b3046e4cfe4e99856ac.zip"
+    sha256 = "a0e4a918e358d9637f5543d5b0b3aa2f69b525e32f956f725cd0de128fb8516b"
 
     [resources.sources.redisbloom]
     url = "https://github.com/RedisBloom/RedisBloom/archive/refs/tags/v8.0.8.zip"
