@@ -130,13 +130,13 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.4-redis, php8.4-bcmath, php8.4-cli, php8.4-ctype, php8.4-exif, php8.4-gd, php8.4-iconv, php8.4-intl, php8.4-mbstring, php8.4-tokenizer, php8.4-xml, php8.4-pdo, php8.4-mysql, php8.4-zip, php8.4-fileinfo, php8.4-imagick, redis-server, cmake, tree, python3-pip,build-essential"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.5-redis, php8.5-bcmath, php8.5-cli, php8.5-ctype, php8.5-exif, php8.5-gd, php8.5-iconv, php8.5-intl, php8.5-mbstring, php8.5-tokenizer, php8.5-xml, php8.5-pdo, php8.5-mysql, php8.5-zip, php8.5-fileinfo, php8.5-imagick, redis-server, cmake, tree, python3-pip,build-essential"
 
     [resources.database]
     type = "mysql"
 
     [resources.nodejs]
-    version = "22"
+    version = "24"
 
     [resources.composer]
-    version = "2.8.12"
+    version = "2.10.1"
