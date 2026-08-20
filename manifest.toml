@@ -130,7 +130,7 @@ ram.runtime = "350M"
     main.url = "/"
 
     [resources.apt]
-    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.5-redis, php8.5-bcmath, php8.5-cli, php8.5-ctype, php8.5-exif, php8.5-gd, php8.5-iconv, php8.5-intl, php8.5-mbstring, php8.5-tokenizer, php8.5-xml, php8.5-pdo, php8.5-mysql, php8.5-zip, php8.5-fileinfo, php8.5-imagick, redis-server, cmake, tree, python3-pip,build-essential"
+    packages = "mariadb-server, libgd3, jpegoptim, optipng, pngquant, ffmpeg, imagemagick, php8.5-redis, php8.5-bcmath, php8.5-cli, php8.5-curl, php8.5-ctype, php8.5-exif, php8.5-gd, php8.5-iconv, php8.5-intl, php8.5-mbstring, php8.5-tokenizer, php8.5-xml, php8.5-pdo, php8.5-mysql, php8.5-zip, php8.5-fileinfo, php8.5-imagick, redis-server, cmake, tree, python3-pip,build-essential"
 
     [resources.database]
     type = "mysql"
