@@ -18,7 +18,7 @@ admindoc = "https://github.com/joinloops/loops-server/blob/main/INSTALLATION.md"
 code = "https://github.com/joinloops/loops-server"
 
 [integration]
-yunohost = ">= 12.1.17"
+yunohost = ">= 12.1.40"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
@@ -139,4 +139,4 @@ ram.runtime = "350M"
     version = "24"
 
     [resources.composer]
-    version = "2.10.1"
+    version = "2.10.3"
